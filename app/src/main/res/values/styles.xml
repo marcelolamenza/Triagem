@@ -16,4 +16,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="text_card">
+        <item name="android:textSize">@dimen/letter_size_small</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

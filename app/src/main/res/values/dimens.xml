@@ -2,4 +2,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="home_btn_width">100dp</dimen>
     <dimen name="home_btn_height">100dp</dimen>
+    <dimen name="letter_size_medium">30sp</dimen>
+    <dimen name="letter_size_small">20sp</dimen>
+    <dimen name="card_home_width">250dp</dimen>
 </resources>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
@@ -19,7 +20,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getClickListeners()
 
+
+    }
+
+    private fun getClickListeners() {
+        view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
+        }
     }
 
 }
