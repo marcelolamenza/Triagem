@@ -4,25 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LoginFragment">
+    tools:context=".LoginFragment"
+    android:background="@color/white"
+    >
+
+    <ImageButton
+        android:id="@+id/icon"
+        android:layout_width="@dimen/home_btn_width"
+        android:layout_height="@dimen/home_btn_height"
+        android:layout_marginTop="80dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic__23_medicine_book" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TRIAGEM"
+        android:textSize="@dimen/letter_size_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon" />
+
 
     <EditText
         android:id="@+id/editUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:drawablePadding="4dp"
         android:ems="10"
-        android:hint="user"
+        android:hint="Usuário"
         android:inputType="textPersonName"
+        android:textSize="@dimen/letter_size_small"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_text_input_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUsuario"
@@ -30,14 +58,15 @@
 
         <EditText
             android:id="@+id/editPassword"
-            android:drawablePadding="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:drawablePadding="4dp"
             android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:textSize="@dimen/letter_size_small" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
@@ -54,7 +83,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:textStyle=""
-        android:text="Remember User"
+        android:textSize="@dimen/letter_size_small"
+        android:text="Lembrar usuário"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout" />
@@ -64,10 +94,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Forget Password"
+        android:text="Esqueceu a senha?"
+        android:textSize="@dimen/letter_size_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recordar_usuario" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Acessar"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
+        android:textSize="@dimen/letter_size_small"
+        android:backgroundTint="#add8e6"
+        app:layout_constraintEnd_toEndOf="@+id/olvidaste_contrasena"
+        app:layout_constraintStart_toStartOf="@+id/olvidaste_contrasena"
+        app:layout_constraintTop_toBottomOf="@+id/olvidaste_contrasena" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
