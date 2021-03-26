@@ -109,7 +109,7 @@
         android:paddingHorizontal="24dp"
         android:paddingVertical="16dp"
         android:textSize="@dimen/letter_size_small"
-        android:backgroundTint="#add8e6"
+        android:backgroundTint="@color/light_main_color"
         app:layout_constraintEnd_toEndOf="@+id/olvidaste_contrasena"
         app:layout_constraintStart_toStartOf="@+id/olvidaste_contrasena"
         app:layout_constraintTop_toBottomOf="@+id/olvidaste_contrasena" />
