@@ -11,15 +11,19 @@ import com.example.triagem.util.inflate
 
 class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterItemViewHolder>() {
 
-    private var debugItemList = mutableListOf<DebugItem>()
+    private var registerItemList = mutableListOf<RegisterItem>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    fun addItem(item: DebugItem) {
-        debugItemList.add(item)
+    fun addItem(item: RegisterItem) {
+        registerItemList.add(item)
         notifyDataSetChanged()
+    }
+
+    fun getAllItens(): MutableList<RegisterItem> {
+        return registerItemList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegisterItemViewHolder {
@@ -29,10 +33,10 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         )
     }
 
-    override fun getItemCount(): Int = debugItemList.toList().size
+    override fun getItemCount(): Int = registerItemList.toList().size
 
     override fun onBindViewHolder(holder: RegisterItemViewHolder, position: Int) {
-        val debugItem = debugItemList.toList()[position]
+        val debugItem = registerItemList.toList()[position]
 
         holder.label.text = debugItem.itemLabel
     }
@@ -42,5 +46,5 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         val info: EditText by lazy { itemView.findViewById<EditText>(R.id.info) }
     }
 
-    data class DebugItem(val itemLabel : String)
+    data class RegisterItem(val itemLabel : String)
 }
