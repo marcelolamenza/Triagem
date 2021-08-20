@@ -21,10 +21,18 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_checkFragment"
+            app:destination="@id/checkFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.triagem.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/checkFragment"
+        android:name="com.example.triagem.CheckFragment"
+        android:label="fragment_check"
+        tools:layout="@layout/fragment_check" />
 </navigation>

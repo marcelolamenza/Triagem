@@ -1,32 +1,33 @@
 package com.example.triagem
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.triagem.adapters.CheckItemAdapter
+import com.example.triagem.util.AdapterInterface
+import kotlinx.android.synthetic.main.fragment_register.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CheckFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CheckFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class CheckFragment : Fragment(), AdapterInterface.AdapterCallback {
+    private val adapter by lazy {CheckItemAdapter() }
+    private var state = State.RED
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recycler_view.adapter = adapter
+        recycler_view.layoutManager = LinearLayoutManager(context)
+
+        adapter.setCallback(this)
+//        adapter.addItem(CheckItemAdapter.CheckItem("INFARTO"))
+//        adapter.addItem(CheckItemAdapter.CheckItem("DOR NO PEITO"))
+//        adapter.addItem(CheckItemAdapter.CheckItem("SOFRIMENTO"))
+//        adapter.addItem(CheckItemAdapter.CheckItem("FUNCIONA"))
+        fillRecycler()
+
     }
 
     override fun onCreateView(
@@ -37,23 +38,63 @@ class CheckFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_check, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheckFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    fun fillRecycler(){
+        adapter.clean()
+        when(state){
+            State.RED -> {
+                adapter.addItem(CheckItemAdapter.CheckItem("INFARTO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("DOR NO PEITO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("SOFRIMENTO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("FUNCIONA"))
             }
+            State.ORANGE -> {
+                adapter.addItem(CheckItemAdapter.CheckItem("OPS"))
+                adapter.addItem(CheckItemAdapter.CheckItem(" NPEITO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("HAHAHAHA"))
+            }
+            State.YELLOW -> {
+
+            }
+            State.GREEN -> {
+
+            }
+            State.BLUE -> {
+
+            }
+            State.EMPTY -> {
+
+            }
+        }
+
+        state = state.next()!!
+    }
+
+    override fun nextFrag() {
+        fillRecycler()
+    }
+//
+//    fun clear() {
+//        val size: Int = adapter.
+//        if (size > 0) {
+//            for (i in 0 until size) {
+//                android.R.attr.data.remove(0)
+//            }
+//            notifyItemRangeRemoved(0, size)
+//        }
+//    }
+
+}
+
+enum class State{
+    RED,ORANGE,YELLOW,BLUE,GREEN, EMPTY
+    {
+        override fun next(): State? {
+            return null // see below for options for this line
+        }
+    };
+
+    open operator fun next(): State? {
+        // No bounds checking required here, because the last instance overrides
+        return values()[ordinal + 1]
     }
 }
