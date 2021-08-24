@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triagem.adapters.CheckItemAdapter
 import com.example.triagem.util.AdapterInterface
-import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_check.*
+import kotlinx.android.synthetic.main.fragment_register.recycler_view
 
 
 class CheckFragment : Fragment(), AdapterInterface.AdapterCallback {
@@ -28,6 +29,10 @@ class CheckFragment : Fragment(), AdapterInterface.AdapterCallback {
 //        adapter.addItem(CheckItemAdapter.CheckItem("FUNCIONA"))
         fillRecycler()
 
+        button.setOnClickListener {
+            fillRecycler()
+        }
+
     }
 
     override fun onCreateView(
@@ -42,20 +47,27 @@ class CheckFragment : Fragment(), AdapterInterface.AdapterCallback {
         adapter.clean()
         when(state){
             State.RED -> {
-                adapter.addItem(CheckItemAdapter.CheckItem("INFARTO"))
-                adapter.addItem(CheckItemAdapter.CheckItem("DOR NO PEITO"))
-                adapter.addItem(CheckItemAdapter.CheckItem("SOFRIMENTO"))
-                adapter.addItem(CheckItemAdapter.CheckItem("FUNCIONA"))
+                adapter.addItem(CheckItemAdapter.CheckItem("ACIDENTES AUTOMOBILISTICO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("TRAUMATISMO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("VITIMA DE ARMA DE FOGO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("INSUFICIENCIA RESPIRATÓRIA"))
             }
             State.ORANGE -> {
-                adapter.addItem(CheckItemAdapter.CheckItem("OPS"))
-                adapter.addItem(CheckItemAdapter.CheckItem(" NPEITO"))
-                adapter.addItem(CheckItemAdapter.CheckItem("HAHAHAHA"))
+                adapter.addItem(CheckItemAdapter.CheckItem("INFARTO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("HEMORRAGIA"))
+                adapter.addItem(CheckItemAdapter.CheckItem("FRATURA"))
+                adapter.addItem(CheckItemAdapter.CheckItem("PERDA DE CONSCIENCIA"))
             }
             State.YELLOW -> {
+                adapter.addItem(CheckItemAdapter.CheckItem("DESIDRATAÇÃO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("INFECÇÃO"))
+                adapter.addItem(CheckItemAdapter.CheckItem("HEMORRAGIA(LEVE)"))
 
             }
             State.GREEN -> {
+                adapter.addItem(CheckItemAdapter.CheckItem("DOR DE GARGANTA"))
+                adapter.addItem(CheckItemAdapter.CheckItem("FEBRE"))
+                adapter.addItem(CheckItemAdapter.CheckItem("TOSSE"))
 
             }
             State.BLUE -> {
@@ -70,7 +82,7 @@ class CheckFragment : Fragment(), AdapterInterface.AdapterCallback {
     }
 
     override fun nextFrag() {
-        fillRecycler()
+//        findNavController().navigate(R.id.)
     }
 //
 //    fun clear() {
