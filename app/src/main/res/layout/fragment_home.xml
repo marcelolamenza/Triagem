@@ -124,7 +124,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_02"
+        android:id="@+id/card_attendance"
         android:layout_width="@dimen/card_home_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -176,7 +176,7 @@
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_02">
+        app:layout_constraintTop_toBottomOf="@+id/card_attendance">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
