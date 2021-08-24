@@ -29,6 +29,10 @@ class HomeFragment : Fragment() {
         view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
         }
+
+        view?.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
+        }
     }
 
 }
