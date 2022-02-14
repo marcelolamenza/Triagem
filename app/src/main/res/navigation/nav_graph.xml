@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/checkFragment"
-        android:name="com.example.triagem.CheckFragment"
+        android:name="com.example.triagem.DiagnosisFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check" />
 </navigation>
