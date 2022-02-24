@@ -1,10 +1,11 @@
 package com.example.triagem.adapters
 
-
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.triagem.R
 import com.example.triagem.util.inflate
@@ -22,7 +23,7 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         notifyDataSetChanged()
     }
 
-    fun getAllItens(): MutableList<RegisterItem> {
+    fun getItems(): MutableList<RegisterItem> {
         return registerItemList
     }
 
@@ -36,9 +37,12 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
     override fun getItemCount(): Int = registerItemList.toList().size
 
     override fun onBindViewHolder(holder: RegisterItemViewHolder, position: Int) {
-        val debugItem = registerItemList.toList()[position]
+        val registerItem = registerItemList.toList()[position]
 
-        holder.label.text = debugItem.itemLabel
+        holder.label.text = registerItem.itemLabel
+        holder.info.addTextChangedListener {
+            registerItemList.toList()[position].itemDescription = it.toString()
+        }
     }
 
     class RegisterItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,5 +50,5 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         val info: EditText by lazy { itemView.findViewById<EditText>(R.id.info) }
     }
 
-    data class RegisterItem(val itemLabel : String)
+    data class RegisterItem(val itemLabel : String, var itemDescription: String? = null)
 }

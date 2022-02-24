@@ -72,7 +72,7 @@
         android:backgroundTint="@color/light_main_color"
         android:paddingHorizontal="30dp"
         android:paddingVertical="16dp"
-        android:text="Cadastrar"
+        android:text="Próximo"
         android:textSize="@dimen/letter_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

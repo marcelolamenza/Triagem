@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "254212601190",
+    "project_id": "triagem-58833",
+    "storage_bucket": "triagem-58833.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254212601190:android:1e430ed7d40c54d2ad44a7",
+        "android_client_info": {
+          "package_name": "com.example.triagem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254212601190-mesvul9a8ooftvdtfln3gce1ujgs58l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP_P7T4xXFM8ltZo4Jol_Oa7KNHEpVBIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254212601190-mesvul9a8ooftvdtfln3gce1ujgs58l2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

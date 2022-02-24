@@ -29,10 +29,23 @@
         android:id="@+id/registerFragment"
         android:name="com.example.triagem.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_registerDetailsFragment"
+            app:destination="@id/registerDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/checkFragment"
         android:name="com.example.triagem.DiagnosisFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check" />
+    <fragment
+        android:id="@+id/registerDetailsFragment"
+        android:name="com.example.triagem.RegisterDetailsFragment"
+        android:label="fragment_register_details"
+        tools:layout="@layout/fragment_register_details" >
+        <action
+            android:id="@+id/action_registerDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
