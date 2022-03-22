@@ -1,6 +1,7 @@
 package com.example.triagem
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,16 @@ class RegisterDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val bundle = arguments
+        if (bundle == null) {
+            Log.e("Confirmation", "ConfirmationFragment did not receive traveler information")
+        }else{
+            val args = RegisterDetailsFragmentArgs.fromBundle(bundle)
+
+
+        }
+
+
         return inflater.inflate(R.layout.fragment_register_details, container, false)
     }
 

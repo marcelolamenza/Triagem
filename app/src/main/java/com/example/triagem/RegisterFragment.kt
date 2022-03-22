@@ -1,16 +1,15 @@
 package com.example.triagem
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.triagem.adapters.RegisterItemAdapter
+import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,8 +34,9 @@ class RegisterFragment : Fragment() {
 //            findDatabase()
 //            saveData()
 
-            Toast.makeText(context, "Usuário adicionado com sucesso!", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_registerFragment_to_registerDetailsFragment)
+//            val direction = RegisterDetailsFragmentDirections.
+//
+//            findNavController().navigate(R.id.action_registerFragment_to_registerDetailsFragment)
         }
     }
 
@@ -55,20 +55,19 @@ class RegisterFragment : Fragment() {
         databaseUsers = db.collection(Constants.Firebase.DB_NAME_USERS)
     }
 
-    private fun saveData() {
+    private fun getDataFromRecyclerView(): List<UserInfo> {
 
-        val users = hashMapOf<String, String>()
-        for(info in adapter.getItems()) {
-            info.itemDescription?.let { users.put(info.itemLabel, it) }
-        }
+//        val user = hashMapOf<String, String>()
+//        for(info in adapter.getItems()) {
+//            info.itemDescription?.let { user.put(info.itemLabel, it) }
+//        }
 
-        databaseUsers.add(users)
-            .addOnSuccessListener { documentReference ->
-                Log.d("LOG", "Document added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("LOG", "Error adding document", e)
-            }
+//        val user = mutableListOf<UserInfo>()
+//        for(info in adapter.getItems()) {
+//            user.add(UserInfo(info.itemLabel, info.itemDescription!!))
+//        }
+
+        return user
     }
 
     override fun onCreateView(
