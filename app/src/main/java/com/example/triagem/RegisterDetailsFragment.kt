@@ -5,34 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_register.*
+import com.example.triagem.models.UserInfo
+import com.example.triagem.util.Constants
+import com.example.triagem.util.FirebaseHandler
 
 class RegisterDetailsFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var userInfo: UserInfo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val bundle = arguments
-        if (bundle == null) {
-            Log.e("Confirmation", "ConfirmationFragment did not receive traveler information")
-        }else{
-            val args = RegisterDetailsFragmentArgs.fromBundle(bundle)
-
-
-        }
-
+        retrieveRegisterInfo()
 
         return inflater.inflate(R.layout.fragment_register_details, container, false)
     }
@@ -43,13 +30,38 @@ class RegisterDetailsFragment : Fragment() {
 
         val button = view.findViewById<Button>(R.id.btn_register)
         button.setOnClickListener{
-//            findDatabase()
-//            saveData()
+            fillUserData()
+            startDatabaseRoutine()
 
             Toast.makeText(context, "Usuário adicionado com sucesso!", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_registerFragment_to_registerDetailsFragment)
+            findNavController().navigate(R.id.action_registerDetailsFragment_to_homeFragment)
         }
+    }
 
+    private fun retrieveRegisterInfo() {
+        val bundle = arguments
+        if (bundle == null) {
+            Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
+        }else{
+            val args = RegisterDetailsFragmentArgs.fromBundle(bundle)
+            userInfo = args.user
+        }
+    }
+
+    private fun fillUserData() {
+        val bloodTypeSpinner = view?.findViewById<Spinner>(R.id.blood_type)
+        val diseaseEditText = view?.findViewById<EditText>(R.id.diseases)
+        appendUserData(bloodTypeSpinner?.selectedItem.toString(), diseaseEditText.toString())
+    }
+
+    private fun appendUserData(bloodType: String, diseases: String) {
+        userInfo.detail[Constants.Register.BLOOD_TYPE] = bloodType
+        userInfo.detail[Constants.Register.DISEASES] = diseases
+    }
+
+    private fun startDatabaseRoutine() {
+        val fbStorage = FirebaseHandler()
+        fbStorage.startSaving(userInfo.detail)
     }
 
     private fun createSpinner(view: View) {
@@ -68,6 +80,4 @@ class RegisterDetailsFragment : Fragment() {
             }
         }
     }
-
-
 }

@@ -8,6 +8,11 @@ class FirebaseHandler {
     private lateinit var databaseUsers: CollectionReference
     val users = hashMapOf<String, String>()
 
+    fun startSaving(currentUser: HashMap<String, String>) {
+        findDatabase()
+        saveData(currentUser)
+    }
+
     private fun findDatabase() {
         val db: FirebaseFirestore = FirebaseFirestore.getInstance()
         databaseUsers = db.collection(Constants.Firebase.DB_NAME_USERS)

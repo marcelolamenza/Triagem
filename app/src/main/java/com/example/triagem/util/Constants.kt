@@ -9,9 +9,15 @@ object Constants {
         const val EMAIL = "Email"
         const val RG = "RG"
         const val CPF = "CPF"
+        const val BLOOD_TYPE = "Tipo sanguineo"
+        const val DISEASES = "Doenças"
     }
 
     object Firebase {
         const val DB_NAME_USERS = "users"
+    }
+
+    object LogMessage {
+        const val ERROR = "error"
     }
 }

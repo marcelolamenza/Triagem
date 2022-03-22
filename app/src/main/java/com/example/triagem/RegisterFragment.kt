@@ -12,7 +12,6 @@ import com.example.triagem.adapters.RegisterItemAdapter
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
@@ -31,12 +30,11 @@ class RegisterFragment : Fragment() {
         fillRecyclerview()
 
         btn_register.setOnClickListener{
-//            findDatabase()
-//            saveData()
+            val userInfo = UserInfo(getDataFromRecyclerView())
 
-//            val direction = RegisterDetailsFragmentDirections.
-//
-//            findNavController().navigate(R.id.action_registerFragment_to_registerDetailsFragment)
+            val directions = RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo)
+
+            findNavController().navigate(directions)
         }
     }
 
@@ -50,22 +48,11 @@ class RegisterFragment : Fragment() {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.CPF))
     }
 
-    private fun findDatabase() {
-        val db: FirebaseFirestore  = FirebaseFirestore.getInstance()
-        databaseUsers = db.collection(Constants.Firebase.DB_NAME_USERS)
-    }
-
-    private fun getDataFromRecyclerView(): List<UserInfo> {
-
-//        val user = hashMapOf<String, String>()
-//        for(info in adapter.getItems()) {
-//            info.itemDescription?.let { user.put(info.itemLabel, it) }
-//        }
-
-//        val user = mutableListOf<UserInfo>()
-//        for(info in adapter.getItems()) {
-//            user.add(UserInfo(info.itemLabel, info.itemDescription!!))
-//        }
+    private fun getDataFromRecyclerView(): HashMap<String, String> {
+        val user = hashMapOf<String, String>()
+        for(info in adapter.getItems()) {
+            info.itemDescription?.let { user.put(info.itemLabel, it) }
+        }
 
         return user
     }

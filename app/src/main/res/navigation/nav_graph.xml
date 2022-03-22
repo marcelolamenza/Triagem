@@ -32,7 +32,12 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_registerDetailsFragment"
-            app:destination="@id/registerDetailsFragment" />
+            app:destination="@id/registerDetailsFragment">
+
+            <argument
+                android:name="user"
+                app:argType="com.example.triagem.models.UserInfo" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/checkFragment"
