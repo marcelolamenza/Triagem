@@ -9,7 +9,8 @@ import com.example.triagem.util.DiagnosisCallback
 import com.example.triagem.util.inflate
 
 
-class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) : RecyclerView.Adapter<DiagnosisItemAdapter.DiagnosisItemViewHolder>(){
+class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
+    RecyclerView.Adapter<DiagnosisItemAdapter.DiagnosisItemViewHolder>() {
 
     private var diagnosisItemList = mutableListOf<DiagnosisItem>()
         set(value) {
@@ -22,18 +23,22 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) : R
         notifyDataSetChanged()
     }
 
-    fun clean(){
+    fun addItemOnList(list: List<DiagnosisItem>) {
+
+    }
+
+    fun clean() {
         diagnosisItemList.removeAll(diagnosisItemList)
         notifyDataSetChanged()
     }
 
     class DiagnosisItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val label: Button by lazy { itemView.findViewById<Button>(R.id.label) }
-        var isClicked : Boolean = false
+        val diseaseButton: Button by lazy { itemView.findViewById<Button>(R.id.label) }
+        var isClicked: Boolean = false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiagnosisItemViewHolder {
-        val rowView = parent.inflate(R.layout.sickness_card,false)
+        val rowView = parent.inflate(R.layout.sickness_card, false)
         return DiagnosisItemViewHolder(
             rowView
         )
@@ -42,12 +47,12 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) : R
     override fun onBindViewHolder(holder: DiagnosisItemViewHolder, position: Int) {
         val debugItem = diagnosisItemList.toList()[position]
 
-        holder.label.text = debugItem.sickness
-        holder.label.setOnClickListener {
+        holder.diseaseButton.text = debugItem.sickness
+
+        holder.diseaseButton.setOnClickListener {
             holder.isClicked = !holder.isClicked
 
-            diagnosisCallback.nextFrag(holder.label, holder.isClicked)
-
+            diagnosisCallback.clickAction(holder.diseaseButton, holder.isClicked)
         }
     }
 
@@ -55,6 +60,6 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) : R
         return diagnosisItemList.toList().size
     }
 
-    data class DiagnosisItem(val sickness : String)
+    data class DiagnosisItem(val sickness: String)
 
 }

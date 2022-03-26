@@ -14,6 +14,7 @@ import com.example.triagem.util.FirebaseHandler
 
 class RegisterDetailsFragment : Fragment() {
     lateinit var userInfo: UserInfo
+    lateinit var spinner: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +66,7 @@ class RegisterDetailsFragment : Fragment() {
     }
 
     private fun createSpinner(view: View) {
-        val spinner: Spinner = view.findViewById(R.id.info)!!
+        spinner = view.findViewById(R.id.info)
         // Create an ArrayAdapter using the string array and a default spinner layout
         context?.let {
             ArrayAdapter.createFromResource(

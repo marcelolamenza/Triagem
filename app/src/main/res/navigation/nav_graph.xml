@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkFragment"
-        android:name="com.example.triagem.DiagnosisFragment"
+        android:name="com.example.triagem.diagnosis.DiagnosisFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check" />
     <fragment

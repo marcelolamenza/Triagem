@@ -8,12 +8,38 @@
     android:background="@color/white"
     >
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/login_background" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:src="@drawable/circle"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="0dp"
+        android:layout_marginTop="50dp">
+
+    </ImageView>
+
     <ImageButton
         android:id="@+id/icon"
         android:layout_width="@dimen/home_btn_width"
         android:layout_height="@dimen/home_btn_height"
         android:layout_marginTop="80dp"
-        android:background="@color/white"
+        android:elevation="1dp"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:elevation="1dp"
         android:text="TRIAGEM"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/letter_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
