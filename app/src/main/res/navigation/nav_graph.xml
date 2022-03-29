@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_checkFragment"
             app:destination="@id/checkFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -56,4 +59,9 @@
             android:name="user"
             app:argType="com.example.triagem.models.UserInfo" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.triagem.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
