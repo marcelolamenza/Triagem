@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.triagem.RegisterFragment"
+        android:name="com.example.triagem.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_check" />
     <fragment
         android:id="@+id/registerDetailsFragment"
-        android:name="com.example.triagem.RegisterDetailsFragment"
+        android:name="com.example.triagem.register.RegisterDetailsFragment"
         android:label="fragment_register_details"
         tools:layout="@layout/fragment_register_details" >
         <action

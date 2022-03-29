@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triagem.R
 import com.example.triagem.adapters.DiagnosisItemAdapter
-import com.example.triagem.util.DiagnosisCallback
 import com.example.triagem.util.PacientState
 import kotlinx.android.synthetic.main.fragment_register.recycler_view
 

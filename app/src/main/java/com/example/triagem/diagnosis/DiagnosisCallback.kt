@@ -1,4 +1,4 @@
-package com.example.triagem.util
+package com.example.triagem.diagnosis
 
 import android.widget.Button
 

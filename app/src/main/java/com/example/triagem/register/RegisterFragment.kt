@@ -1,4 +1,4 @@
-package com.example.triagem
+package com.example.triagem.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.triagem.R
 import com.example.triagem.adapters.RegisterItemAdapter
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants

@@ -1,4 +1,4 @@
-package com.example.triagem
+package com.example.triagem.register
 
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseHandler
 
 class RegisterDetailsFragment : Fragment() {
-    lateinit var userInfo: UserInfo
-    lateinit var spinner: Spinner
+    private lateinit var userInfo: UserInfo
+    private lateinit var spinner: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +67,7 @@ class RegisterDetailsFragment : Fragment() {
     }
 
     private fun createSpinner(view: View) {
-        spinner = view.findViewById(R.id.info)
+        spinner = view.findViewById(R.id.blood_type)
         // Create an ArrayAdapter using the string array and a default spinner layout
         context?.let {
             ArrayAdapter.createFromResource(
