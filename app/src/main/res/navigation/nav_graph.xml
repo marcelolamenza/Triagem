@@ -46,9 +46,9 @@
         tools:layout="@layout/fragment_check" />
     <fragment
         android:id="@+id/registerDetailsFragment"
-        android:name="com.example.triagem.register.RegisterDetailsFragment"
+        android:name="com.example.triagem.register.RegisterContinuationFragment"
         android:label="fragment_register_details"
-        tools:layout="@layout/fragment_register_details" >
+        tools:layout="@layout/fragment_register_continuation" >
         <action
             android:id="@+id/action_registerDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

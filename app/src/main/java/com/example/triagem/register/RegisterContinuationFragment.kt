@@ -13,7 +13,7 @@ import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseHandler
 
-class RegisterDetailsFragment : Fragment() {
+class RegisterContinuationFragment : Fragment() {
     private lateinit var userInfo: UserInfo
     private lateinit var spinner: Spinner
 
@@ -23,7 +23,7 @@ class RegisterDetailsFragment : Fragment() {
     ): View? {
         retrieveRegisterInfo()
 
-        return inflater.inflate(R.layout.fragment_register_details, container, false)
+        return inflater.inflate(R.layout.fragment_register_continuation, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class RegisterDetailsFragment : Fragment() {
         if (bundle == null) {
             Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
         }else{
-            val args = RegisterDetailsFragmentArgs.fromBundle(bundle)
+            val args = RegisterContinuationFragmentArgs.fromBundle(bundle)
             userInfo = args.user
         }
     }
