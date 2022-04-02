@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment() {
     private val adapter by lazy { RegisterItemAdapter() }
-    private lateinit var databaseUsers: CollectionReference
     private lateinit var recyclerView: RecyclerView
+    private var userId = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,20 +30,22 @@ class RegisterFragment : Fragment() {
 
         fillRecyclerview()
 
-        btn_register.setOnClickListener{
-            val userInfo = UserInfo(getDataFromRecyclerView())
+        btn_register.setOnClickListener {
+            val userHash = getDataFromRecyclerView()
 
-            val directions = RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo)
+            val userInfo = UserInfo(userId, userHash)
+            val directions =
+                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo)
 
             findNavController().navigate(directions)
         }
     }
 
-    private fun fillRecyclerview(){
+    private fun fillRecyclerview() {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.FIRST_NAME))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.LAST_NAME))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.PHONE))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.ADRESS))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.ADDRESS))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.EMAIL))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.RG))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.CPF))
@@ -51,7 +53,11 @@ class RegisterFragment : Fragment() {
 
     private fun getDataFromRecyclerView(): HashMap<String, String> {
         val user = hashMapOf<String, String>()
-        for(info in adapter.getItems()) {
+        for (info in adapter.getItems()) {
+            if (info.itemLabel == Constants.Register.CPF) {
+                userId = info.itemDescription!!
+            }
+
             info.itemDescription?.let { user.put(info.itemLabel, it) }
         }
 

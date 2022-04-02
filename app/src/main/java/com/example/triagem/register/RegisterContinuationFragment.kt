@@ -11,9 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
+import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
 
-class RegisterContinuationFragment : Fragment() {
+class RegisterContinuationFragment : Fragment(), FirebaseCallback {
     private lateinit var userInfo: UserInfo
     private lateinit var spinner: Spinner
 
@@ -52,18 +53,19 @@ class RegisterContinuationFragment : Fragment() {
 
     private fun fillUserData() {
         val bloodTypeSpinner = view?.findViewById<Spinner>(R.id.blood_type)
-        val diseaseEditText = view?.findViewById<EditText>(R.id.diseases)
-        appendUserData(bloodTypeSpinner?.selectedItem.toString(), diseaseEditText.toString())
+        val diseaseEditText = requireView().findViewById<EditText>(R.id.diseases)
+
+        appendUserData(bloodTypeSpinner?.selectedItem.toString(), diseaseEditText.text.toString())
     }
 
     private fun appendUserData(bloodType: String, diseases: String) {
-        userInfo.detail[Constants.Register.BLOOD_TYPE] = bloodType
-        userInfo.detail[Constants.Register.DISEASES] = diseases
+        userInfo.infoMap[Constants.Register.BLOOD_TYPE] = bloodType
+        userInfo.infoMap[Constants.Register.DISEASES] = diseases
     }
 
     private fun startDatabaseRoutine() {
-        val fbStorage = FirebaseHandler()
-        fbStorage.startSaving(userInfo.detail)
+        val fbStorage = FirebaseHandler(this)
+        fbStorage.startSaving(userInfo)
     }
 
     private fun createSpinner(view: View) {
@@ -81,5 +83,9 @@ class RegisterContinuationFragment : Fragment() {
                 spinner.adapter = adapter
             }
         }
+    }
+
+    override fun actionAfterResult(userFinal: UserInfo) {
+        //TODO("Not yet implemented")
     }
 }
