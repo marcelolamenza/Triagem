@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.triagem.maps.MapsDialog
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,9 +21,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlin.Exception
+import com.google.android.gms.maps.model.PointOfInterest
 
-class MapsFragment : Fragment() {
+class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
     lateinit var map: GoogleMap
 
     private val REQUEST_LOCATION_PERMISSION = 1
@@ -48,6 +49,7 @@ class MapsFragment : Fragment() {
         map.addMarker(MarkerOptions().position(city).title("Marker in Sydney"))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(city, zoomLevel))
 
+        map.setOnPoiClickListener(this)
 
     }
 
@@ -119,6 +121,20 @@ class MapsFragment : Fragment() {
         }
     }
 
+    /**
+    Toast.makeText(requireContext(), """Clicked: ${poi.name}
+    Place ID:${poi.placeId}
+    Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
+    Toast.LENGTH_SHORT
+    ).show()
+     */
+
+    override fun onPoiClick(poi: PointOfInterest) {
+        val dialog = MapsDialog(parentFragmentManager)
+
+        dialog.customShow(poi.name)
+    }
+
 //    override fun onRequestPermissionsResult(
 //        requestCode: Int,
 //        permissions: Array<String>,
@@ -129,4 +145,6 @@ class MapsFragment : Fragment() {
 //            }
 //        }
 //    }
+
+
 }

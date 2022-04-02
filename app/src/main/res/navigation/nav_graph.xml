@@ -46,7 +46,11 @@
         android:id="@+id/checkFragment"
         android:name="com.example.triagem.diagnosis.DiagnosisFragment"
         android:label="fragment_check"
-        tools:layout="@layout/fragment_check" />
+        tools:layout="@layout/fragment_check" >
+        <action
+            android:id="@+id/action_checkFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerDetailsFragment"
         android:name="com.example.triagem.register.RegisterContinuationFragment"

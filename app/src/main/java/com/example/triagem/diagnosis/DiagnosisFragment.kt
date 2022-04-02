@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triagem.R
 import com.example.triagem.adapters.DiagnosisItemAdapter
@@ -43,7 +44,7 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
     }
 
     private fun solveTriagem() {
-        TODO("Not yet implemented")
+        findNavController().navigate(R.id.action_checkFragment_to_mapsFragment)
     }
 
     override fun onCreateView(
