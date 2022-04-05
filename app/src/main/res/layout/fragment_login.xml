@@ -60,7 +60,7 @@
 
 
     <EditText
-        android:id="@+id/editUsuario"
+        android:id="@+id/user_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/user_edit"
         app:passwordToggleEnabled="true">
 
         <EditText

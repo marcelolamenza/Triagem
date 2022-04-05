@@ -1,7 +1,7 @@
 package com.example.triagem.util
 
 object Constants {
-    object Register {
+    object User {
         const val FIRST_NAME = "Nome"
         const val LAST_NAME = "Sobrenome"
         const val PHONE = "Telefone"
@@ -11,6 +11,8 @@ object Constants {
         const val CPF = "CPF"
         const val BLOOD_TYPE = "Tipo sanguineo"
         const val DISEASES = "Doenças"
+
+        const val NO_USER = "-1"
     }
 
     object Firebase {
@@ -18,6 +20,7 @@ object Constants {
     }
 
     object LogMessage {
+        const val TAG = "logTag"
         const val ERROR = "error"
     }
 }

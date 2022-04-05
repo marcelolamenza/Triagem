@@ -12,7 +12,6 @@ import com.example.triagem.R
 import com.example.triagem.adapters.RegisterItemAdapter
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
-import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
@@ -42,19 +41,19 @@ class RegisterFragment : Fragment() {
     }
 
     private fun fillRecyclerview() {
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.FIRST_NAME))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.LAST_NAME))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.PHONE))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.ADDRESS))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.EMAIL))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.RG))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.Register.CPF))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.FIRST_NAME))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.LAST_NAME))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PHONE))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.RG))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
     }
 
     private fun getDataFromRecyclerView(): HashMap<String, String> {
         val user = hashMapOf<String, String>()
         for (info in adapter.getItems()) {
-            if (info.itemLabel == Constants.Register.CPF) {
+            if (info.itemLabel == Constants.User.CPF) {
                 userId = info.itemDescription!!
             }
 

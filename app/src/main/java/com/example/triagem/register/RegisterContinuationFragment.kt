@@ -11,10 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
-import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
 
-class RegisterContinuationFragment : Fragment(), FirebaseCallback {
+class RegisterContinuationFragment : Fragment() {
     private lateinit var userInfo: UserInfo
     private lateinit var spinner: Spinner
 
@@ -32,12 +31,14 @@ class RegisterContinuationFragment : Fragment(), FirebaseCallback {
         createSpinner(view)
 
         val button = view.findViewById<Button>(R.id.btn_register)
-        button.setOnClickListener{
+        button.setOnClickListener {
             fillUserData()
-            startDatabaseRoutine()
+            saveOnDatabase()
 
             Toast.makeText(context, "Usuário adicionado com sucesso!", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_registerDetailsFragment_to_homeFragment)
+
+            val directions = RegisterContinuationFragmentDirections.actionRegisterDetailsFragmentToHomeFragment(userInfo.id)
+            findNavController().navigate(directions)
         }
     }
 
@@ -45,7 +46,7 @@ class RegisterContinuationFragment : Fragment(), FirebaseCallback {
         val bundle = arguments
         if (bundle == null) {
             Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
-        }else{
+        } else {
             val args = RegisterContinuationFragmentArgs.fromBundle(bundle)
             userInfo = args.user
         }
@@ -59,12 +60,12 @@ class RegisterContinuationFragment : Fragment(), FirebaseCallback {
     }
 
     private fun appendUserData(bloodType: String, diseases: String) {
-        userInfo.infoMap[Constants.Register.BLOOD_TYPE] = bloodType
-        userInfo.infoMap[Constants.Register.DISEASES] = diseases
+        userInfo.infoMap?.set(Constants.User.BLOOD_TYPE, bloodType)
+        userInfo.infoMap?.set(Constants.User.DISEASES, diseases)
     }
 
-    private fun startDatabaseRoutine() {
-        val fbStorage = FirebaseHandler(this)
+    private fun saveOnDatabase() {
+        val fbStorage = FirebaseHandler()
         fbStorage.startSaving(userInfo)
     }
 
@@ -83,9 +84,5 @@ class RegisterContinuationFragment : Fragment(), FirebaseCallback {
                 spinner.adapter = adapter
             }
         }
-    }
-
-    override fun actionAfterResult(userFinal: UserInfo) {
-        //TODO("Not yet implemented")
     }
 }

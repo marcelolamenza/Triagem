@@ -5,15 +5,8 @@ import com.example.triagem.models.UserInfo
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FirebaseHandler(val firebaseCallback: FirebaseCallback) {
+class FirebaseHandler(private val firebaseCallback: FirebaseCallback? = null) {
     private lateinit var databaseUsers: CollectionReference
-
-
-
-//    var a = HashMap <String, String>()
-//
-
-//    var userFinal = UserInfo("", a)
 
     fun startSaving(userInfo: UserInfo) {
         findDatabase()
@@ -25,47 +18,35 @@ class FirebaseHandler(val firebaseCallback: FirebaseCallback) {
         databaseUsers = db.collection(Constants.Firebase.DB_NAME_USERS)
     }
 
-    private fun saveData(userHashMap: HashMap<String, String>) {
-        databaseUsers.add(userHashMap)
-            .addOnSuccessListener { documentReference ->
-                Log.d("LOG", "Document added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("LOG", "Error adding document", e)
-            }
-    }
-
     private fun saveDataToDocument(userInfo: UserInfo) {
-        Log.d("TAG", "\nID: ${userInfo.id} \nDATA: ${userInfo.infoMap}\n")
+        Log.d(Constants.LogMessage.TAG, "\nID: ${userInfo.id} \nDATA: ${userInfo.infoMap}\n")
 
-        databaseUsers.document(userInfo.id).set(userInfo.infoMap)
+        userInfo.infoMap?.let { databaseUsers.document(userInfo.id).set(it) }
     }
 
-    val TAG = "HAHAHA"
-    fun retrieveData(userId: String) {
+    fun retrieveUserData(userId: String) {
         findDatabase()
-        val dbInformation = databaseUsers.document(userId).get()
+
+        databaseUsers.document(userId).get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    val userFinal = UserInfo(userId, document.data as HashMap<String, String>)
-                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                    Log.d(TAG, "ID: ${userFinal.id}")
-                    Log.d(TAG, "BLOOD: ${userFinal.infoMap[Constants.Register.BLOOD_TYPE]}")
-
-                    firebaseCallback.actionAfterResult(userFinal)
+                    sendInfoToFragment(userId, document.data as HashMap<String, String>)
                 } else {
-                    Log.d(TAG, "No such document")
+                    sendInfoToFragment(Constants.User.NO_USER, null)
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+                Log.d(Constants.LogMessage.TAG, "get failed with ", exception)
             }
+    }
 
-//        return UserInfo(userId, dbInformation.result!!.data as HashMap<String, String>)
-//
+    private fun sendInfoToFragment(id: String, data: HashMap<String, String>?) {
+        val user = UserInfo(id, data)
+        firebaseCallback?.fillLayoutWithUserInfo(user)
+        Log.d(Constants.LogMessage.TAG, "DocumentSnapshot data: $data")
     }
 }
 
 interface FirebaseCallback {
-    fun actionAfterResult(userFinal: UserInfo)
+    fun fillLayoutWithUserInfo(userFinal: UserInfo)
 }

@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_homeFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+        <argument
+            android:name="cpf"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
