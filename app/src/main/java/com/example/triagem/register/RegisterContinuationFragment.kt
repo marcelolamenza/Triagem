@@ -32,7 +32,7 @@ class RegisterContinuationFragment : Fragment() {
 
         val button = view.findViewById<Button>(R.id.btn_register)
         button.setOnClickListener {
-            fillUserData()
+            addAdditionalUserInformation()
             saveOnDatabase()
 
             Toast.makeText(context, "Usuário adicionado com sucesso!", Toast.LENGTH_LONG).show()
@@ -52,7 +52,7 @@ class RegisterContinuationFragment : Fragment() {
         }
     }
 
-    private fun fillUserData() {
+    private fun addAdditionalUserInformation() {
         val bloodTypeSpinner = view?.findViewById<Spinner>(R.id.blood_type)
         val diseaseEditText = requireView().findViewById<EditText>(R.id.diseases)
 
@@ -71,16 +71,13 @@ class RegisterContinuationFragment : Fragment() {
 
     private fun createSpinner(view: View) {
         spinner = view.findViewById(R.id.blood_type)
-        // Create an ArrayAdapter using the string array and a default spinner layout
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
                 R.array.blood_type_array,
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
-                // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                // Apply the adapter to the spinner
                 spinner.adapter = adapter
             }
         }

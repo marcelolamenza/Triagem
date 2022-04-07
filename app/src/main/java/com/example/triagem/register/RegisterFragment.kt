@@ -14,7 +14,6 @@ import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import kotlinx.android.synthetic.main.fragment_register.*
 
-
 class RegisterFragment : Fragment() {
     private val adapter by lazy { RegisterItemAdapter() }
     private lateinit var recyclerView: RecyclerView
@@ -30,9 +29,9 @@ class RegisterFragment : Fragment() {
         fillRecyclerview()
 
         btn_register.setOnClickListener {
-            val userHash = getDataFromRecyclerView()
+            val userHashMap = getDataFromRecyclerView()
 
-            val userInfo = UserInfo(userId, userHash)
+            val userInfo = UserInfo(userId, userHashMap)
             val directions =
                 RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo)
 
@@ -43,11 +42,11 @@ class RegisterFragment : Fragment() {
     private fun fillRecyclerview() {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.FIRST_NAME))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.LAST_NAME))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.RG))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PHONE))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.RG))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
     }
 
     private fun getDataFromRecyclerView(): HashMap<String, String> {
@@ -59,7 +58,6 @@ class RegisterFragment : Fragment() {
 
             info.itemDescription?.let { user.put(info.itemLabel, it) }
         }
-
         return user
     }
 

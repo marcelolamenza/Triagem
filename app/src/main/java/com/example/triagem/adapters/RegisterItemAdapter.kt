@@ -1,6 +1,6 @@
 package com.example.triagem.adapters
 
-import android.util.Log
+import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.triagem.R
+import com.example.triagem.util.Constants
+import com.example.triagem.util.EditTextMask
 import com.example.triagem.util.inflate
 
 class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterItemViewHolder>() {
@@ -28,7 +30,7 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegisterItemViewHolder {
-        val rowView = parent.inflate(R.layout.information_card,false)
+        val rowView = parent.inflate(R.layout.information_card, false)
         return RegisterItemViewHolder(
             rowView
         )
@@ -40,8 +42,24 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         val registerItem = registerItemList.toList()[position]
 
         holder.label.text = registerItem.itemLabel
+
+        applyMaskIntoHolder(holder, Constants.User.PHONE, "(##)#####-####")
+        applyMaskIntoHolder(holder, Constants.User.CPF, "###.###.###-##")
+        applyMaskIntoHolder(holder, Constants.User.RG, "##.###.###-#")
+
         holder.info.addTextChangedListener {
             registerItemList.toList()[position].itemDescription = it.toString()
+        }
+    }
+
+    private fun applyMaskIntoHolder(
+        holder: RegisterItemViewHolder,
+        ediTextType: String,
+        mask: String
+    ) {
+        if (holder.label.text == ediTextType) {
+            holder.info.addTextChangedListener(EditTextMask.mask(mask, holder.info))
+            holder.info.inputType = InputType.TYPE_CLASS_NUMBER
         }
     }
 
@@ -50,5 +68,5 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         val info: EditText by lazy { itemView.findViewById<EditText>(R.id.info) }
     }
 
-    data class RegisterItem(val itemLabel : String, var itemDescription: String? = null)
+    data class RegisterItem(val itemLabel: String, var itemDescription: String? = null)
 }
