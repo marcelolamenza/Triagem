@@ -28,7 +28,20 @@
         app:layout_constraintTop_toBottomOf="@+id/titleLabel"
         tools:text="TITLE" />
 
+    <TextView
+        android:id="@+id/capacity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:textSize="@dimen/letter_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="10 / 100" />
+
     <Button
+        android:id="@+id/button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -39,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/capacity" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

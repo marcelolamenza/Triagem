@@ -1,4 +1,4 @@
-package com.example.triagem
+package com.example.triagem.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.triagem.maps.MapsDialog
+import com.example.triagem.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -130,7 +130,7 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
      */
 
     override fun onPoiClick(poi: PointOfInterest) {
-        val dialog = MapsDialog(parentFragmentManager)
+        val dialog = MapsDialog(parentFragmentManager, poi.placeId)
 
         dialog.customShow(poi.name)
     }

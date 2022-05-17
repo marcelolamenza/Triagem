@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/round_corner.xml" value="0.1415" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/dialog_maps.xml" value="0.15260416666666668" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_home.xml" value="0.15260416666666668" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_login.xml" value="0.1703125" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_register.xml" value="0.15260416666666668" />
