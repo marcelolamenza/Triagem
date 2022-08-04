@@ -10,18 +10,16 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.example.triagem.R
-import com.example.triagem.hospitalCommunication.FirebaseHospitalCommunication
-import com.example.triagem.hospitalCommunication.HospitalCallback
-import com.example.triagem.hospitalCommunication.HospitalCommunicationInterface
+import com.example.triagem.hospitalCommunication.*
+import com.example.triagem.models.HospitalInfo
+import com.google.android.gms.maps.model.PointOfInterest
 
-class MapsDialog(
-    private val fragManager: FragmentManager,
-    private val placeId: String
-) : DialogFragment(), HospitalCallback {
+class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHospitalCallback {
     lateinit var titleTextView: TextView
     lateinit var button: Button
     lateinit var capacity: TextView
-    private var title: String = ""
+
+    //    private var title: String = ""
     lateinit var hospitalCommunication: HospitalCommunicationInterface
 
     override fun onCreateView(
@@ -36,7 +34,7 @@ class MapsDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTextView = view.findViewById(R.id.title)
-        titleTextView.text = title
+//        titleTextView.text = title
 
         button = view.findViewById(R.id.button)
         button.setOnClickListener {
@@ -44,7 +42,7 @@ class MapsDialog(
         }
 
         capacity = view.findViewById(R.id.capacity)
-        hospitalCommunication = FirebaseHospitalCommunication(placeId, this)
+        hospitalCommunication = MockedHospitalCommunication(poi, this)
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -60,14 +58,10 @@ class MapsDialog(
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    fun customShow(dialogTitle: String) {
-        title = dialogTitle
-        show(fragManager, "TAG")
-    }
-
     @SuppressLint("SetTextI18n")
-    override fun fillHospitalCapacity(actual: Long, total: Long) {
-        capacity.text = "Lotação: $actual/ $total"
+    override fun fillHospitalInformation(hospitalInfo: HospitalInfo) {
+        titleTextView.text = hospitalInfo.name
+        capacity.text = "Lotação: ${hospitalInfo.actualPopulation}/ ${hospitalInfo.totalCapacity}"
     }
 
 }

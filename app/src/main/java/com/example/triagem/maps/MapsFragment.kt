@@ -130,9 +130,8 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
      */
 
     override fun onPoiClick(poi: PointOfInterest) {
-        val dialog = MapsDialog(parentFragmentManager, poi.placeId)
-
-        dialog.customShow(poi.name)
+        val dialog = MapsDialog(poi)
+        dialog.show(parentFragmentManager, "DIALOG_TAG")
     }
 
 //    override fun onRequestPermissionsResult(

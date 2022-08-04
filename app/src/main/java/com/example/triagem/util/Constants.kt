@@ -28,7 +28,7 @@ object Constants {
     }
 
     object LogMessage {
-        const val TAG = "logTag"
+        const val TAG = "log_tag"
         const val ERROR = "error"
     }
 }

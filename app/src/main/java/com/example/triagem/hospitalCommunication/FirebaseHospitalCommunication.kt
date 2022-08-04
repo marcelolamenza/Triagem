@@ -6,12 +6,11 @@ import com.example.triagem.util.Constants
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FirebaseHospitalCommunication(id: String, val hospitalCallback: HospitalCallback) : HospitalCommunicationInterface {
+class FirebaseHospitalCommunication(val id: String, val hospitalCallback: HospitalCallback) : HospitalCommunicationInterface {
     private lateinit var hospitalDatabase: CollectionReference
-    private var hospitalInfo: HospitalInfo
 
     init {
-        hospitalInfo = retrieveHospitalData(id)
+        retrieveHospitalData(id)
     }
 
     override fun sendInformation() {
@@ -19,7 +18,7 @@ class FirebaseHospitalCommunication(id: String, val hospitalCallback: HospitalCa
     }
 
     override fun getHospitalCapacity(): Long {
-        return hospitalInfo.totalCapacity
+        return 0
     }
 
     override fun getPatientsList() {
@@ -27,7 +26,7 @@ class FirebaseHospitalCommunication(id: String, val hospitalCallback: HospitalCa
     }
 
     override fun getPatientsTotal(): Long {
-        return hospitalInfo.actualPopulation
+        return 0
     }
 
     private fun findDatabase() {
@@ -51,34 +50,28 @@ class FirebaseHospitalCommunication(id: String, val hospitalCallback: HospitalCa
         }
     }
 
-    private fun retrieveHospitalData(hospitalId: String): HospitalInfo {
+    private fun retrieveHospitalData(hospitalId: String) {
         findDatabase()
-
-        hospitalInfo = HospitalInfo("", "", 0, 0)
 
         hospitalDatabase.document(hospitalId).get()
             .addOnSuccessListener { document ->
 
-                hospitalInfo = HospitalInfo(
+                val hospitalInfo = HospitalInfo(
                     name = document[Constants.Hospitals.NAME].toString(),
-                    id = document[Constants.Hospitals.ID].toString(),
+                    id = id,
                     actualPopulation = document[Constants.Hospitals.ACTUAL_CAPACITY] as Long,
                     totalCapacity = document[Constants.Hospitals.TOTAL_CAPACITY] as Long
                 )
 
-                hospitalCallback.fillHospitalCapacity(hospitalInfo.actualPopulation, hospitalInfo.totalCapacity)
+                hospitalCallback.fillHospitalCapacity(hospitalInfo)
             }
             .addOnFailureListener { exception ->
                 Log.d(Constants.LogMessage.TAG, "get failed with ", exception)
             }
-
-        Log.e("TAG", " ACTUAL POPULATION ${hospitalInfo.actualPopulation}")
-
-        return hospitalInfo
     }
 
 }
 
 interface HospitalCallback {
-    fun fillHospitalCapacity(actual: Long, total: Long)
+    fun fillHospitalCapacity(hospitalInfo: HospitalInfo)
 }
