@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import com.example.triagem.R
 import com.example.triagem.hospitalCommunication.*
 import com.example.triagem.models.HospitalInfo
@@ -18,8 +17,6 @@ class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHos
     lateinit var titleTextView: TextView
     lateinit var button: Button
     lateinit var capacity: TextView
-
-    //    private var title: String = ""
     lateinit var hospitalCommunication: HospitalCommunicationInterface
 
     override fun onCreateView(
@@ -34,8 +31,6 @@ class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHos
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTextView = view.findViewById(R.id.title)
-//        titleTextView.text = title
-
         button = view.findViewById(R.id.button)
         button.setOnClickListener {
             action()
