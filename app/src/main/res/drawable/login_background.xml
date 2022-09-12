@@ -5,10 +5,10 @@
 
     <solid android:color="@color/colorPrimary"/>
 
-    <gradient
-        android:startColor="@color/light_main_color"
-        android:angle="90"
-        android:endColor="@color/colorPrimaryDark"/>
+<!--    <gradient-->
+<!--        android:startColor="@color/text_color"-->
+<!--        android:angle="90"-->
+<!--        android:endColor="@color/colorPrimaryDark"/>-->
 
     <corners android:bottomLeftRadius="10sp"
         android:bottomRightRadius="10sp"/>

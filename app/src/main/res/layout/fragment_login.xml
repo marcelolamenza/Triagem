@@ -117,30 +117,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout" />
 
-    <TextView
-        android:id="@+id/olvidaste_contrasena"
+    <Button
+        android:id="@+id/new_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Esqueceu a senha?"
-        android:textSize="@dimen/letter_size_small"
+        android:text="PRIMEIRO ACESSO"
+        android:textSize="16dp"
+
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordar_usuario" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Acessar"
+        android:backgroundTint="@color/text_color"
         android:paddingHorizontal="24dp"
         android:paddingVertical="16dp"
+        android:text="Acessar"
         android:textSize="@dimen/letter_size_small"
-        android:backgroundTint="@color/light_main_color"
-        app:layout_constraintEnd_toEndOf="@+id/olvidaste_contrasena"
-        app:layout_constraintStart_toStartOf="@+id/olvidaste_contrasena"
-        app:layout_constraintTop_toBottomOf="@+id/olvidaste_contrasena" />
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/new_user"
+        app:layout_constraintStart_toStartOf="@+id/new_user"
+        app:layout_constraintTop_toBottomOf="@+id/recordar_usuario" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

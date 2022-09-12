@@ -11,7 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.triagem.util.EditTextMask
 
 class LoginFragment : Fragment() {
-    lateinit var userEditText: EditText
+    lateinit var userName: EditText
+    lateinit var password: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,14 +24,20 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userEditText = view.findViewById(R.id.user_edit)
-        userEditText.addTextChangedListener(EditTextMask.mask("###.###.###-##", userEditText))
+        userName = view.findViewById(R.id.user_edit)
+        userName.addTextChangedListener(EditTextMask.mask("###.###.###-##", userName))
+
+        password = view.findViewById(R.id.editPassword)
 
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val directions =
-                LoginFragmentDirections.actionLoginFragmentToHomeFragment(userEditText.text.toString())
+                LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
 
             findNavController().navigate(directions)
+        }
+
+        view.findViewById<Button>(R.id.new_user).setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 

@@ -35,7 +35,7 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
         enableMyLocation(map)
         setMapStyle(map)
 
-        ajustMapToCurrentPosition()
+        adjustMapToCurrentPosition()
 
         map.setOnPoiClickListener(this)
     }
@@ -83,7 +83,7 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
         }
     }
 
-    private fun ajustMapToCurrentPosition() {
+    private fun adjustMapToCurrentPosition() {
         val fusedLocationClient: FusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 

@@ -29,7 +29,7 @@
                 android:gravity="center_horizontal"
                 android:text="Cadastro"
                 android:textSize="@dimen/letter_size_medium"
-                android:textColor="@color/light_main_color"
+                android:textColor="@color/text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Tipo Sanguineo"
-                    android:textColor="@color/light_main_color"
+                    android:textColor="@color/text_color"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Descrição de doenças"
-                    android:textColor="@color/light_main_color"
+                    android:textColor="@color/text_color"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/light_main_color"
+        android:backgroundTint="@color/text_color"
         android:paddingHorizontal="30dp"
         android:paddingVertical="16dp"
         android:text="Cadastrar"

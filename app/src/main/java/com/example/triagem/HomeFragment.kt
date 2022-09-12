@@ -21,7 +21,7 @@ import com.example.triagem.util.FirebaseHandler
 class HomeFragment : Fragment(), FirebaseCallback {
 
     private lateinit var userCard: ConstraintLayout
-    private lateinit var name: TextView
+    private lateinit var userName: TextView
     private lateinit var nameLabel: TextView
     private lateinit var bloodType: TextView
     private lateinit var loadingGif: ImageView
@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun getXmlInfo(view: View) {
-        name = view.findViewById(R.id.name_info)
+        userName = view.findViewById(R.id.name_info)
         userCard = view.findViewById(R.id.user_description)
         nameLabel = view.findViewById(R.id.name_label)
         bloodType = view.findViewById(R.id.blood_type)
@@ -60,7 +60,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
     private fun getClickListeners() {
         view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
+            //findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
         }
 
         view?.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
@@ -88,7 +88,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
         loadAnimationSetup(false)
 
         if (userFinal.id != Constants.User.NO_USER) {
-            name.text = "${userFinal.infoMap?.get(Constants.User.FIRST_NAME)} ${
+            userName.text = "${userFinal.infoMap?.get(Constants.User.FIRST_NAME)} ${
                 userFinal.infoMap?.get(Constants.User.LAST_NAME)
             }"
             bloodType.text = userFinal.infoMap?.get(Constants.User.BLOOD_TYPE) ?: ""
