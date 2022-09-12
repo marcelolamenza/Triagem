@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/login_background.xml" value="0.146" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/round_corner.xml" value="0.1415" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/toast_round_background.xml" value="0.1465" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/custom_toast_layout.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/dialog_maps.xml" value="0.15260416666666668" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_check.xml" value="0.15260416666666668" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_diagnosis_continuation.xml" value="0.18177083333333333" />
