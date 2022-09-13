@@ -19,7 +19,7 @@ class CustomToast() {
         val GRAVITY_BOTTOM = 80
         private lateinit var layoutInflater: LayoutInflater
 
-        fun show(context: Context, text: String) {
+        fun show2(context: Context, text: String) {
             val toast = Toast(context)
 
             val layoutInflater = LayoutInflater.from(context)
@@ -31,12 +31,13 @@ class CustomToast() {
             toast.show()
         }
 
-        fun infoToast(context: Activity, message: String, position: Int) {
+        fun show(context: Activity, message: String, position: Int) {
             layoutInflater = LayoutInflater.from(context)
             val layout = layoutInflater.inflate(R.layout.custom_toast_layout, (context).findViewById(R.id.custom_toast_layout))
+
             val drawable = ContextCompat.getDrawable(context, R.drawable.toast_round_background)
-//            drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, R.color.info), PorterDuff.Mode.MULTIPLY)
             layout.background = drawable
+
             layout.custom_toast_message.setTextColor(Color.WHITE)
             layout.custom_toast_message.text = message
 
@@ -44,9 +45,9 @@ class CustomToast() {
             val toast = Toast(context.applicationContext)
             toast.duration = Toast.LENGTH_SHORT
             if (position == GRAVITY_BOTTOM) {
-                toast.setGravity(position, 0, 20)
+                toast.setGravity(position, 0, 40)
             } else {
-                toast.setGravity(position, 0, 0)
+                toast.setGravity(position, 0, 20)
             }
             toast.view = layout //setting the view of custom toast layout
             toast.show()

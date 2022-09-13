@@ -37,7 +37,7 @@ class LoginFragment : Fragment(), FirebaseCallback {
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val id = userName.text.toString()
             if(id.isNullOrEmpty()) {
-                CustomToast.infoToast(requireActivity(), "Insira um usuario!", 0)
+                CustomToast.show(requireActivity(), "Insira um usuario!", CustomToast.GRAVITY_BOTTOM)
             } else {
                 verifyPassword(id)
             }
@@ -74,10 +74,10 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
                 findNavController().navigate(directions)
             } else {
-                CustomToast.infoToast(requireActivity(), "Senha incorreta!", 0)
+                CustomToast.show(requireActivity(), "Senha incorreta!", 0)
             }
         } else {
-            CustomToast.infoToast(requireActivity(), "404 Erro de Banco de dados!", 0)
+            CustomToast.show(requireActivity(), "404 Erro de Banco de dados!", 0)
         }
     }
 }
