@@ -7,6 +7,7 @@ object Constants {
         const val PHONE = "Telefone"
         const val ADDRESS = "Endereço"
         const val EMAIL = "Email"
+        const val PASSWORD = "Senha"
         const val RG = "RG"
         const val CPF = "CPF"
         const val BLOOD_TYPE = "Tipo sanguineo"

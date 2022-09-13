@@ -47,6 +47,7 @@ class RegisterFragment : Fragment() {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PHONE))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
+        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PASSWORD))
     }
 
     private fun getDataFromRecyclerView(): HashMap<String, String> {

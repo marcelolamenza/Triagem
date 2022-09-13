@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
-import com.example.triagem.util.EditTextMask
+import com.bumptech.glide.Glide
+import com.example.triagem.models.UserInfo
+import com.example.triagem.util.*
 
-class LoginFragment : Fragment() {
-    lateinit var userName: EditText
-    lateinit var password: EditText
+class LoginFragment : Fragment(), FirebaseCallback {
+    private lateinit var userName: EditText
+    private lateinit var password: EditText
+    private lateinit var loadingGif: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +32,15 @@ class LoginFragment : Fragment() {
         userName.addTextChangedListener(EditTextMask.mask("###.###.###-##", userName))
 
         password = view.findViewById(R.id.editPassword)
+        loadingGif = view.findViewById(R.id.loading_gif)
 
         view.findViewById<Button>(R.id.login).setOnClickListener {
-            val directions =
-                LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
-
-            findNavController().navigate(directions)
+            val id = userName.text.toString()
+            if(id.isNullOrEmpty()) {
+                CustomToast.infoToast(requireActivity(), "Insira um usuario!", 0)
+            } else {
+                verifyPassword(id)
+            }
         }
 
         view.findViewById<Button>(R.id.new_user).setOnClickListener {
@@ -41,4 +48,36 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun verifyPassword(id: String) {
+        loadAnimationSetup(true)
+
+        val firebase = FirebaseHandler(this)
+        firebase.retrieveUserData(id)
+    }
+
+    private fun loadAnimationSetup(isStarting: Boolean) {
+        if (isStarting) {
+            loadingGif.visibility = View.VISIBLE
+            Glide.with(this).load(R.drawable.loading_gif).into(loadingGif)
+        } else {
+            loadingGif.visibility = View.GONE
+        }
+    }
+
+    override fun fillLayoutWithUserInfo(userFinal: UserInfo) {
+        loadAnimationSetup(false)
+
+        if (userFinal.id != Constants.User.NO_USER) {
+            if (userFinal.infoMap!![Constants.User.PASSWORD] == password.text.toString()) {
+                val directions =
+                    LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
+
+                findNavController().navigate(directions)
+            } else {
+                CustomToast.infoToast(requireActivity(), "Senha incorreta!", 0)
+            }
+        } else {
+            CustomToast.infoToast(requireActivity(), "404 Erro de Banco de dados!", 0)
+        }
+    }
 }
