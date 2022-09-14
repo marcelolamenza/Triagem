@@ -31,6 +31,10 @@ class CustomToast() {
             toast.show()
         }
 
+        fun showBottom(context: Activity, message: String) {
+            show(context, message, GRAVITY_BOTTOM)
+        }
+
         fun show(context: Activity, message: String, position: Int) {
             layoutInflater = LayoutInflater.from(context)
             val layout = layoutInflater.inflate(R.layout.custom_toast_layout, (context).findViewById(R.id.custom_toast_layout))
