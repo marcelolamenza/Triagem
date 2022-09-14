@@ -28,25 +28,25 @@ class FirebaseHandler(private val firebaseCallback: FirebaseCallback? = null) {
         findDatabase()
 
         databaseUsers.document(userId).get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    sendInfoToFragment(userId, document.data as HashMap<String, String>)
+            .addOnSuccessListener { userInfo ->
+                if (userInfo != null) {
+                    sendInfoToFragment(userId, userInfo.data as HashMap<String, String>?)
                 } else {
                     sendInfoToFragment(Constants.User.NO_USER, null)
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(Constants.LogMessage.TAG, "get failed with ", exception)
+                Log.d(Constants.LogMessage.TAG, "get failed with AAAAAA", exception)
             }
     }
 
     private fun sendInfoToFragment(id: String, data: HashMap<String, String>?) {
         val user = UserInfo(id, data)
-        firebaseCallback?.fillLayoutWithUserInfo(user)
+        firebaseCallback?.onDatabaseResponse(user)
         Log.d(Constants.LogMessage.TAG, "DocumentSnapshot data: $data")
     }
 }
 
 interface FirebaseCallback {
-    fun fillLayoutWithUserInfo(userFinal: UserInfo)
+    fun onDatabaseResponse(userFinal: UserInfo)
 }

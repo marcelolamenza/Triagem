@@ -84,13 +84,15 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     @SuppressLint("SetTextI18n")
-    override fun fillLayoutWithUserInfo(userFinal: UserInfo) {
+    override fun onDatabaseResponse(userFinal: UserInfo) {
         loadAnimationSetup(false)
 
         if (userFinal.id != Constants.User.NO_USER) {
-            userName.text = "${userFinal.infoMap?.get(Constants.User.FIRST_NAME)} ${
-                userFinal.infoMap?.get(Constants.User.LAST_NAME)
-            }"
+            val firstName = userFinal.infoMap?.get(Constants.User.FIRST_NAME)
+            var lastName = userFinal.infoMap?.get(Constants.User.LAST_NAME)
+            lastName = lastName?.substringBefore(" ")
+
+            userName.text = "$firstName $lastName"
             bloodType.text = userFinal.infoMap?.get(Constants.User.BLOOD_TYPE) ?: ""
         } else {
             nameLabel.text = "Nenhum usuario encontrado"

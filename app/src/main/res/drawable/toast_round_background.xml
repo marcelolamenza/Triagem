@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="center" android:top="5sp" android:bottom="5sp">
+    <item android:gravity="center" android:top="4sp" android:bottom="4sp">
         <shape android:shape="rectangle" >
 <!--            <stroke android:width="1sp" android:color="@color/colorPrimary"/>-->
             <solid android:color="@color/colorPrimary"/>

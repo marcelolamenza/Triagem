@@ -6,4 +6,5 @@
     <dimen name="letter_size_small">20sp</dimen>
     <dimen name="edit_text_letter_size_small">20sp</dimen>
     <dimen name="card_home_width">250dp</dimen>
+    <dimen name="home_icon_size">76dp</dimen>
 </resources>

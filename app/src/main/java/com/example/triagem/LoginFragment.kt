@@ -36,10 +36,18 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val id = userName.text.toString()
-            if(id.isNullOrEmpty()) {
-                CustomToast.showBottom(requireActivity(), "Insira um usuario!")
-            } else {
-                verifyPassword(id)
+            val filledPassword = password.text.toString()
+
+            when {
+                id.isNullOrEmpty() -> {
+                    CustomToast.showBottom(requireActivity(), "Insira um usuario!")
+                }
+                filledPassword.isNullOrEmpty() -> {
+                    CustomToast.showBottom(requireActivity(), "Insira uma senha!")
+                }
+                else -> {
+                    verifyPassword(id)
+                }
             }
         }
 
@@ -64,21 +72,21 @@ class LoginFragment : Fragment(), FirebaseCallback {
         }
     }
 
-    override fun fillLayoutWithUserInfo(userFinal: UserInfo) {
+    override fun onDatabaseResponse(userFinal: UserInfo) {
         loadAnimationSetup(false)
 
-        if (userFinal.id != Constants.User.NO_USER) {
-            if (userFinal.infoMap!![Constants.User.PASSWORD] == password.text.toString()) {
+        when {
+            userFinal.infoMap.isNullOrEmpty() -> {
+                CustomToast.showBottom(requireActivity(), "Usuário incorreto!!")
+            }
+            userFinal.infoMap!![Constants.User.PASSWORD] == password.text.toString() -> {
                 val directions =
                     LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
-
                 findNavController().navigate(directions)
-            } else {
-                CustomToast.showBottom(requireActivity(), "Senha incorreta!")
-
             }
-        } else {
-            CustomToast.showBottom(requireActivity(), "404 Erro de Banco de dados!")
+            else -> {
+                CustomToast.showBottom(requireActivity(), "Senha incorreta!")
+            }
         }
     }
 }
