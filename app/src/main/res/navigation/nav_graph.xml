@@ -18,6 +18,9 @@
         <argument
             android:name="cpf"
             app:argType="string" />
+        <action
+            android:id="@+id/action_homeFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -44,6 +47,10 @@
                 android:name="user"
                 app:argType="com.example.triagem.models.UserInfo" />
         </action>
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/checkFragment"

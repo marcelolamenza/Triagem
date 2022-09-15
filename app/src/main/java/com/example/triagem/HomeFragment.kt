@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.triagem.models.UserInfo
+import com.example.triagem.register.RegisterFragmentDirections
 import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
@@ -60,7 +61,8 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
     private fun getClickListeners() {
         view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
-            //findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
+            val directions = HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID)
+            findNavController().navigate(directions)
         }
 
         view?.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {

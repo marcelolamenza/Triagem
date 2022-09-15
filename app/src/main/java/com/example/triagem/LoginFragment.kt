@@ -52,7 +52,10 @@ class LoginFragment : Fragment(), FirebaseCallback {
         }
 
         view.findViewById<Button>(R.id.new_user).setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+//            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            val directions =
+                LoginFragmentDirections.actionLoginFragmentToRegisterFragment(null)
+            findNavController().navigate(directions)
         }
     }
 
