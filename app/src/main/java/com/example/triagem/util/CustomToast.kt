@@ -1,12 +1,8 @@
 package com.example.triagem.util
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.triagem.R
@@ -19,23 +15,11 @@ class CustomToast() {
         val GRAVITY_BOTTOM = 80
         private lateinit var layoutInflater: LayoutInflater
 
-        fun show2(context: Context, text: String) {
-            val toast = Toast(context)
-
-            val layoutInflater = LayoutInflater.from(context)
-            val layout = layoutInflater.inflate(R.layout.custom_toast_layout, null)
-
-            toast.setText(text)
-            toast.duration =  Toast.LENGTH_SHORT
-            toast.view = layout
-            toast.show()
-        }
-
         fun showBottom(context: Activity, message: String) {
             show(context, message, GRAVITY_BOTTOM)
         }
 
-        fun show(context: Activity, message: String, position: Int) {
+        private fun show(context: Activity, message: String, position: Int) {
             layoutInflater = LayoutInflater.from(context)
             val layout = layoutInflater.inflate(R.layout.custom_toast_layout, (context).findViewById(R.id.custom_toast_layout))
 
