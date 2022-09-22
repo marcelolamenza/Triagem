@@ -1,5 +1,6 @@
 package com.example.triagem.adapters
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -12,6 +13,8 @@ import com.example.triagem.util.inflate
 class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
     RecyclerView.Adapter<DiagnosisItemAdapter.DiagnosisItemViewHolder>() {
 
+    var lastClickedPos = -1
+
     private var diagnosisItemList = mutableListOf<DiagnosisItem>()
         set(value) {
             field = value
@@ -23,8 +26,34 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
         notifyDataSetChanged()
     }
 
-    fun addItemOnList(list: List<DiagnosisItem>) {
+    fun addTransparencyToOtherOptions(
+        position: Int,
+        isSelected: Boolean,
+        neutralColor: ColorStateList,
+        neutralTextColor: ColorStateList
+    ) {
+        for (item in diagnosisItemList) {
+            if (isSelected) {
+                if (item != diagnosisItemList[position]) {
+                    item.transparency = 0.5f
+                    item.buttonColor = neutralColor
+                    item.textColor = neutralTextColor
+                    item.isSelected = false
+                } else {
+                    item.transparency = 1f
+                    item.buttonColor = null
+                    item.textColor = null
+                    item.isSelected = true
+                }
+            } else {
+                item.transparency = 1f
+                item.buttonColor = neutralColor
+                item.textColor = neutralTextColor
+                item.isSelected = false
+            }
+        }
 
+        notifyDataSetChanged()
     }
 
     fun clean() {
@@ -48,11 +77,21 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
         val debugItem = diagnosisItemList.toList()[position]
 
         holder.diseaseButton.text = debugItem.sickness
+        holder.diseaseButton.alpha = debugItem.transparency
+        holder.isClicked = debugItem.isSelected
+
+        if (debugItem.buttonColor != null) {
+            holder.diseaseButton.backgroundTintList = debugItem.buttonColor
+        }
+
+        if (debugItem.textColor != null) {
+            holder.diseaseButton.setTextColor(debugItem.textColor)
+        }
 
         holder.diseaseButton.setOnClickListener {
             holder.isClicked = !holder.isClicked
 
-            diagnosisCallback.clickAction(holder.diseaseButton, holder.isClicked)
+            diagnosisCallback.clickAction(holder.diseaseButton, holder.isClicked, position)
         }
     }
 
@@ -60,6 +99,12 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
         return diagnosisItemList.toList().size
     }
 
-    data class DiagnosisItem(val sickness: String)
+    data class DiagnosisItem(
+        val sickness: String,
+        var transparency: Float = 1f,
+        var buttonColor: ColorStateList? = null,
+        var textColor: ColorStateList? = null,
+        var isSelected: Boolean = false
+    )
 
 }

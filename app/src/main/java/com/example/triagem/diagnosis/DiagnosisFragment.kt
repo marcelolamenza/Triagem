@@ -25,7 +25,6 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_check, container, false)
     }
 
@@ -92,22 +91,33 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         }
     }
 
-    override fun clickAction(button: Button, isClicked: Boolean) {
+    override fun clickAction(button: Button, isSelected: Boolean, position: Int) {
         val buttonColor: ColorStateList
         val buttonTextColor: ColorStateList
 
-        if (isClicked) {
+        val neutralTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        val neutralBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+
+
+        if (isSelected) {
             numberOfOptionsClicked++
-            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimaryDark))
             buttonTextColor = ColorStateList.valueOf(resources.getColor(R.color.white))
         } else {
             numberOfOptionsClicked--
-            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
+            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
             buttonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         }
 
         button.backgroundTintList = buttonColor
         button.setTextColor(buttonTextColor)
+
+        adapter.addTransparencyToOtherOptions(
+            position,
+            isSelected,
+            neutralBackgroundColor,
+            neutralTextColor
+        )
 
         if (numberOfOptionsClicked == 0) {
             actionButton.text = getString(R.string.action_button_no_option_selected)
