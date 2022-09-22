@@ -20,10 +20,17 @@ import com.example.triagem.util.FirebaseHandler
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment(), FirebaseCallback {
-    private val adapter by lazy { RegisterItemAdapter() }
     private lateinit var recyclerView: RecyclerView
-    private var userId = ""
     private lateinit var loadingGif: ImageView
+    private val adapter by lazy { RegisterItemAdapter() }
+    private var userId = ""
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_register, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,20 +64,24 @@ class RegisterFragment : Fragment(), FirebaseCallback {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.FIRST_NAME))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.LAST_NAME))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.RG))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PHONE))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PASSWORD))
 
         if(arguments != null) {
             val bundle = arguments
             if (bundle == null) {
+
                 Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
             } else {
                 val args = RegisterFragmentArgs.fromBundle(bundle)
 
-                args.id?.let { loadUserInformation(it) }
+                if (args.id != null) {
+                    loadUserInformation(args.id!!)
+                } else {
+                    adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
+                    adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PASSWORD))
+                }
             }
         }
     }
@@ -90,23 +101,14 @@ class RegisterFragment : Fragment(), FirebaseCallback {
     private fun loadAnimationSetup(shouldRun: Boolean) {
         if (shouldRun) {
             loadingGif.visibility = View.VISIBLE
-            Glide.with(this).load(R.drawable.loading_gif).into(loadingGif)
+            Glide.with(this).load(R.drawable.loading_purple).into(loadingGif)
         } else {
             loadingGif.visibility = View.GONE
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
-    }
-
     override fun onDatabaseResponse(userFinal: UserInfo) {
         loadAnimationSetup(false)
-
         adapter.updateFieldInformation(userFinal)
     }
 }

@@ -78,7 +78,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
         if (isStarting) {
             userCard.visibility = View.INVISIBLE
             loadingGif.visibility = View.VISIBLE
-            Glide.with(this).load(R.drawable.loading_gif).into(loadingGif)
+            Glide.with(this).load(R.drawable.loading_purple).into(loadingGif)
         } else {
             userCard.visibility = View.VISIBLE
             loadingGif.visibility = View.GONE

@@ -72,7 +72,7 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         for((i, item) in registerItemList.withIndex()) {
             userInfo.infoMap?.forEach { info ->
                 if(item.itemLabel == info.key) {
-                    item.itemDescription = info.value.toString()
+                    item.itemDescription = info.value
                 }
             }
             notifyItemChanged(i)
