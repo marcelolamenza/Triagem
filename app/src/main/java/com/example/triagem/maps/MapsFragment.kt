@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -23,8 +24,9 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PointOfInterest
 
 
-class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
+class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener, MapsDialog.DialogCallback {
     lateinit var map: GoogleMap
+    lateinit var poiDialog: MapsDialog
     private var currentPosition = LatLng(0.0,0.0)
 
     private val REQUEST_LOCATION_PERMISSION = 1
@@ -124,7 +126,12 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener {
     }
 
     override fun onPoiClick(poi: PointOfInterest) {
-        val poiDialog = MapsDialog(poi)
+        poiDialog = MapsDialog(poi, this)
         poiDialog.show(parentFragmentManager, "DIALOG_TAG")
+    }
+
+    override fun click() {
+        poiDialog.dismiss()
+        findNavController().navigate(R.id.action_mapsFragment_to_waitFragment)
     }
 }

@@ -13,7 +13,7 @@ import com.example.triagem.hospitalCommunication.*
 import com.example.triagem.models.HospitalInfo
 import com.google.android.gms.maps.model.PointOfInterest
 
-class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHospitalCallback {
+class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCallback) : DialogFragment(), MockedHospitalCallback {
     lateinit var titleTextView: TextView
     lateinit var button: Button
     lateinit var capacity: TextView
@@ -33,7 +33,7 @@ class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHos
         titleTextView = view.findViewById(R.id.title)
         button = view.findViewById(R.id.button)
         button.setOnClickListener {
-            action()
+            dialogCallback.click()
         }
 
         capacity = view.findViewById(R.id.capacity)
@@ -42,9 +42,9 @@ class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHos
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun action() {
-        //TODO("Not yet implemented")
-    }
+//    private fun action() {
+//        dialogCallback.click()
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -59,4 +59,7 @@ class MapsDialog(private val poi: PointOfInterest) : DialogFragment(), MockedHos
         capacity.text = "Lotação: ${hospitalInfo.actualPopulation}/ ${hospitalInfo.totalCapacity}"
     }
 
+    interface DialogCallback {
+        fun click()
+    }
 }

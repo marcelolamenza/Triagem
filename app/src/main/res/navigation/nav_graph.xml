@@ -77,5 +77,14 @@
         android:id="@+id/mapsFragment"
         android:name="com.example.triagem.maps.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_waitFragment"
+            app:destination="@id/waitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/waitFragment"
+        android:name="com.example.triagem.wait.WaitFragment"
+        android:label="fragment_wait"
+        tools:layout="@layout/fragment_wait" />
 </navigation>
