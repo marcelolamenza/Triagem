@@ -130,7 +130,7 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener, MapsDialog.Dialog
         poiDialog.show(parentFragmentManager, "DIALOG_TAG")
     }
 
-    override fun click() {
+    override fun dialogClick() {
         poiDialog.dismiss()
         findNavController().navigate(R.id.action_mapsFragment_to_waitFragment)
     }

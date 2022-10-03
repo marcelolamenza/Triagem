@@ -33,7 +33,7 @@ class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCal
         titleTextView = view.findViewById(R.id.title)
         button = view.findViewById(R.id.button)
         button.setOnClickListener {
-            dialogCallback.click()
+            dialogCallback.dialogClick()
         }
 
         capacity = view.findViewById(R.id.capacity)
@@ -41,10 +41,6 @@ class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCal
 
         super.onViewCreated(view, savedInstanceState)
     }
-
-//    private fun action() {
-//        dialogCallback.click()
-//    }
 
     override fun onStart() {
         super.onStart()
@@ -60,6 +56,6 @@ class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCal
     }
 
     interface DialogCallback {
-        fun click()
+        fun dialogClick()
     }
 }
