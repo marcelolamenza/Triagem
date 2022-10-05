@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
     private fun getClickListeners() {
         view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
-            val directions = HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID)
+            val directions = HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID, true)
             findNavController().navigate(directions)
         }
 

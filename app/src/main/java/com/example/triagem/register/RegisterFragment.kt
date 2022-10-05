@@ -22,8 +22,11 @@ import kotlinx.android.synthetic.main.fragment_register.*
 class RegisterFragment : Fragment(), FirebaseCallback {
     private lateinit var recyclerView: RecyclerView
     private lateinit var loadingGif: ImageView
+    private var isEditing = false
     private val adapter by lazy { RegisterItemAdapter() }
     private var userId = ""
+    private var password = ""
+    private var diseases = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,17 +50,10 @@ class RegisterFragment : Fragment(), FirebaseCallback {
 
             val userInfo = UserInfo(userId, userHashMap)
             val directions =
-                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo)
+                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo, isEditing)
 
             findNavController().navigate(directions)
         }
-    }
-
-    private fun loadUserInformation(id: String) {
-        loadAnimationSetup(true)
-
-        val firebase = FirebaseHandler(this)
-        firebase.retrieveUserData(id)
     }
 
     private fun fillRecyclerview() {
@@ -68,22 +64,37 @@ class RegisterFragment : Fragment(), FirebaseCallback {
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
         adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
 
+        retrieveDataFromBundle()
+
+        if (isEditing) {
+            loadUserInformation(userId)
+        } else {
+            adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
+            adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PASSWORD))
+        }
+    }
+
+    private fun retrieveDataFromBundle() {
         if(arguments != null) {
             val bundle = arguments
             if (bundle == null) {
-
                 Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
             } else {
                 val args = RegisterFragmentArgs.fromBundle(bundle)
 
                 if (args.id != null) {
-                    loadUserInformation(args.id!!)
-                } else {
-                    adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.CPF))
-                    adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PASSWORD))
+                    userId = args.id!!
+                    isEditing = args.isEditing
                 }
             }
         }
+    }
+
+    private fun loadUserInformation(id: String) {
+        loadAnimationSetup(true)
+
+        val firebase = FirebaseHandler(this)
+        firebase.retrieveUserData(id)
     }
 
     private fun getDataFromRecyclerView(): HashMap<String, String> {
@@ -95,6 +106,13 @@ class RegisterFragment : Fragment(), FirebaseCallback {
 
             info.itemDescription?.let { user.put(info.itemLabel, it) }
         }
+
+        if(isEditing) {
+            user[Constants.User.CPF] = userId
+            user[Constants.User.PASSWORD] = password
+            user[Constants.User.DISEASES] = diseases
+        }
+
         return user
     }
 
@@ -110,5 +128,7 @@ class RegisterFragment : Fragment(), FirebaseCallback {
     override fun onDatabaseResponse(userFinal: UserInfo) {
         loadAnimationSetup(false)
         adapter.updateFieldInformation(userFinal)
+        password = userFinal.infoMap?.get(Constants.User.PASSWORD) ?: ""
+        diseases = userFinal.infoMap?.get(Constants.User.DISEASES) ?: Constants.LogMessage.DEV_ERROR
     }
 }

@@ -13,6 +13,12 @@ class FirebaseHandler(private val firebaseCallback: FirebaseCallback? = null) {
         saveDataToDocument(userInfo)
     }
 
+    fun startUpdating(userInfo: UserInfo) {
+        findDatabase()
+
+        userInfo.infoMap?.let { databaseUsers.document(userInfo.id).update(it as Map<String, Any>) }
+    }
+
     private fun findDatabase() {
         val db: FirebaseFirestore = FirebaseFirestore.getInstance()
         databaseUsers = db.collection(Constants.Firebase.DB_NAME_USERS)

@@ -31,5 +31,6 @@ object Constants {
     object LogMessage {
         const val TAG = "log_tag"
         const val ERROR = "error"
+        const val DEV_ERROR = "O dev fez algo de errado"
     }
 }

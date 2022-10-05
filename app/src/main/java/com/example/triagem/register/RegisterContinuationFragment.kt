@@ -11,11 +11,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
+import com.example.triagem.util.CustomToast
 import com.example.triagem.util.FirebaseHandler
 
 class RegisterContinuationFragment : Fragment() {
     private lateinit var userInfo: UserInfo
-    private lateinit var spinner: Spinner
+    private var isEditing = false
+    private lateinit var bloodTypeSpinner: Spinner
+    private lateinit var diseaseEditText: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +33,24 @@ class RegisterContinuationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         createSpinner(view)
 
+        diseaseEditText = requireView().findViewById<EditText>(R.id.diseases)
+
+        if (isEditing) {
+            diseaseEditText.setText(userInfo.infoMap?.get(Constants.User.DISEASES) ?: "O dev fez alguma besteira")
+        }
+
         val button = view.findViewById<Button>(R.id.btn_register)
         button.setOnClickListener {
-            addAdditionalUserInformation()
-            saveOnDatabase()
 
-            Toast.makeText(context, "Usuário adicionado com sucesso!", Toast.LENGTH_LONG).show()
+            addAdditionalInformation()
+
+            if (isEditing) {
+                updateDatabase()
+            } else {
+                saveOnDatabase()
+
+                CustomToast.showBottom(requireActivity(), "Usuário adicionado com sucesso!")
+            }
 
             val directions = RegisterContinuationFragmentDirections.actionRegisterDetailsFragmentToHomeFragment(userInfo.id)
             findNavController().navigate(directions)
@@ -49,14 +64,13 @@ class RegisterContinuationFragment : Fragment() {
         } else {
             val args = RegisterContinuationFragmentArgs.fromBundle(bundle)
             userInfo = args.user
+            isEditing = args.isEditing
         }
     }
 
-    private fun addAdditionalUserInformation() {
-        val bloodTypeSpinner = view?.findViewById<Spinner>(R.id.blood_type)
-        val diseaseEditText = requireView().findViewById<EditText>(R.id.diseases)
+    private fun addAdditionalInformation() {
 
-        appendUserData(bloodTypeSpinner?.selectedItem.toString(), diseaseEditText.text.toString())
+        appendUserData(bloodTypeSpinner.selectedItem.toString(), diseaseEditText.text.toString())
     }
 
     private fun appendUserData(bloodType: String, diseases: String) {
@@ -69,8 +83,13 @@ class RegisterContinuationFragment : Fragment() {
         fbStorage.startSaving(userInfo)
     }
 
+    private fun updateDatabase() {
+        val fbStorage = FirebaseHandler()
+        fbStorage.startUpdating(userInfo)
+    }
+
     private fun createSpinner(view: View) {
-        spinner = view.findViewById(R.id.blood_type)
+        bloodTypeSpinner = view.findViewById(R.id.blood_type)
         context?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -78,7 +97,7 @@ class RegisterContinuationFragment : Fragment() {
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = adapter
+                bloodTypeSpinner.adapter = adapter
             }
         }
     }

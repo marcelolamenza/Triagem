@@ -51,6 +51,10 @@
             android:name="id"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="isEditing"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/checkFragment"
@@ -72,6 +76,10 @@
         <action
             android:id="@+id/action_registerDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="isEditing"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
