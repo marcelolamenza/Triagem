@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="12dp"
                 android:gravity="center"
-                android:text="Você será atendido após o seguinte tempo"
+                android:text="Por favor se dirija ao hospital quando o tempo chegar a 20 minutos"
                 android:textSize="@dimen/edit_text_letter_size_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
