@@ -18,6 +18,7 @@ class LoginFragment : Fragment(), FirebaseCallback {
     private lateinit var userName: EditText
     private lateinit var password: EditText
     private lateinit var loadingGif: ImageView
+    private lateinit var sharedPref: SharedPrefHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +30,15 @@ class LoginFragment : Fragment(), FirebaseCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPref = SharedPrefHandler(requireActivity())
         userName = view.findViewById(R.id.user_edit)
         userName.addTextChangedListener(EditTextMask.mask("###.###.###-##", userName))
-
         password = view.findViewById(R.id.editPassword)
         loadingGif = view.findViewById(R.id.loading_gif)
 
-        showWelcomeDialogs()
+        if(sharedPref.getString(Constants.SharedPref.FIRST_LOGIN) == Constants.SharedPref.DEFAULT_VALUE) {
+            showWelcomeDialogs()
+        }
 
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val id = userName.text.toString()
@@ -64,22 +67,29 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
     private fun showWelcomeDialogs() {
         createAlertDialog(
-            "Sejam bem vindos!",
-            "Qualquer coisa etc",
+            "Essa é uma versão de testes e podem ocorrer alguns bug, qualquer erro " +
+                    "encontrado podem informar dentro do Forms! Obrigado desde já!",
             "Fechar"
         ).show()
 
         createAlertDialog(
-            "Sejam bem vindos!",
-            "Este aplicativo tem o intuito de facilitar a entrada de pacientes em " +
-                    "hospitais facilitando o processo de triagem!",
+            "O processo de testes pode durar em média 15 minutos, incluindo criação de conta." +
+                    "Todos os seus dados podem ser ficticios. Atenção que o valor de CPF será o seu login.",
             "Próximo"
         ).show()
+
+        createAlertDialog(
+            "Este aplicativo tem o intuito de facilitar a entrada de pacientes em " +
+                    "hospitais, facilitando o processo de triagem e gerando informações sobre os hospitais!",
+            "Próximo"
+        ).show()
+
+        sharedPref.saveString(Constants.SharedPref.FIRST_LOGIN, "true")
     }
 
-    private fun createAlertDialog(title: String, message: String, nextButtonText: String): AlertDialog.Builder {
+    private fun createAlertDialog(message: String, nextButtonText: String): AlertDialog.Builder {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
+        builder.setTitle("Sejam bem vindos!")
         builder.setMessage(message)
         builder.setPositiveButton(nextButtonText) { _, _ -> }
 
