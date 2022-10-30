@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.triagem.models.UserInfo
@@ -34,6 +35,8 @@ class LoginFragment : Fragment(), FirebaseCallback {
         password = view.findViewById(R.id.editPassword)
         loadingGif = view.findViewById(R.id.loading_gif)
 
+        showWelcomeDialogs()
+
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val id = userName.text.toString()
             val filledPassword = password.text.toString()
@@ -57,6 +60,30 @@ class LoginFragment : Fragment(), FirebaseCallback {
                 LoginFragmentDirections.actionLoginFragmentToRegisterFragment(null)
             findNavController().navigate(directions)
         }
+    }
+
+    private fun showWelcomeDialogs() {
+        createAlertDialog(
+            "Sejam bem vindos!",
+            "Qualquer coisa etc",
+            "Fechar"
+        ).show()
+
+        createAlertDialog(
+            "Sejam bem vindos!",
+            "Este aplicativo tem o intuito de facilitar a entrada de pacientes em " +
+                    "hospitais facilitando o processo de triagem!",
+            "Próximo"
+        ).show()
+    }
+
+    private fun createAlertDialog(title: String, message: String, nextButtonText: String): AlertDialog.Builder {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(nextButtonText) { _, _ -> }
+
+        return builder
     }
 
     private fun verifyPassword(id: String) {
@@ -83,7 +110,8 @@ class LoginFragment : Fragment(), FirebaseCallback {
                 CustomToast.showBottom(requireActivity(), "Usuário incorreto!!")
             }
             userFinal.infoMap!![Constants.User.PASSWORD] == password.text.toString() -> {
-                val directions = LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
+                val directions =
+                    LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
                 findNavController().navigate(directions)
             }
             else -> {
