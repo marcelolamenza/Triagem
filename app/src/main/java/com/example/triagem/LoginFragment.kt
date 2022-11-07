@@ -74,13 +74,14 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
         createAlertDialog(
             "O processo de testes pode durar em média 15 minutos, incluindo criação de conta." +
-                    "Todos os seus dados podem ser ficticios. Atenção que o valor de CPF será o seu login.",
+                    "Todos os seus dados podem ser ficticios. Atenção que o valor de CPF será o seu login," +
+                    " então grave qual número você inserir durante a criação de conta.",
             "Próximo"
         ).show()
 
         createAlertDialog(
             "Este aplicativo tem o intuito de facilitar a entrada de pacientes em " +
-                    "hospitais, facilitando o processo de triagem e gerando informações sobre os hospitais!",
+                    "hospitais, facilitando o processo de triagem e trazendo informações sobre os hospitais!",
             "Próximo"
         ).show()
 
