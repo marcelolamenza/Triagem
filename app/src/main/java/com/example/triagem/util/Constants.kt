@@ -33,4 +33,10 @@ object Constants {
         const val ERROR = "error"
         const val DEV_ERROR = "O dev fez algo de errado"
     }
+
+    object SharedPref {
+        const val NAME = "shared"
+        const val FIRST_LOGIN = "firstLogin"
+        const val DEFAULT_VALUE = ""
+    }
 }

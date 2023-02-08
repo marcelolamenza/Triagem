@@ -1,6 +1,7 @@
 package com.example.triagem.wait
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
@@ -9,8 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.triagem.R
+import com.example.triagem.models.UserInfo
+import com.example.triagem.util.Constants
+import com.example.triagem.util.FirebaseCallback
+import com.example.triagem.util.FirebaseHandler
 
-class WaitFragment : Fragment() {
+class WaitFragment : Fragment(), FirebaseCallback {
     lateinit var peopleText: TextView
     lateinit var checkWaiting: CheckWaitTime
     var peopleLeft = 0
@@ -29,6 +34,20 @@ class WaitFragment : Fragment() {
         checkWaiting = MockedWaitTime()
         peopleText = view.findViewById(R.id.waiting_users)
 
+        val pref = requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
+        val id = pref.getString(Constants.User.CPF, "")
+
+        val firebase = FirebaseHandler()
+        id?.let { firebase.retrieveUserData(it) }
+
+        //findDatabase() //todo pegar o banco e carregar ID aqui, depois usar o dados dele para mostrar na tela
+        //todo pegar o nivel de perigo e adicionar o tempo certo
+
+
+
+    }
+
+    private fun startUpdate() {
         object : CountDownTimer(10000, 2000) {
 
             // Callback function, fired on regular interval
@@ -39,8 +58,6 @@ class WaitFragment : Fragment() {
                 peopleText.text = "$peopleLeft "
             }
 
-            // Callback function, fired
-            // when the time is up
             @SuppressLint("SetTextI18n")
             override fun onFinish() {
 
@@ -51,5 +68,11 @@ class WaitFragment : Fragment() {
                 }
             }
         }.start()
+    }
+
+    override fun onDatabaseResponse(userFinal: UserInfo) {
+
+
+        startUpdate()
     }
 }

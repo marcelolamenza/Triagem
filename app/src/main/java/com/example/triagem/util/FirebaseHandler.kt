@@ -42,7 +42,7 @@ class FirebaseHandler(private val firebaseCallback: FirebaseCallback? = null) {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d(Constants.LogMessage.TAG, "get failed with AAAAAA", exception)
+                Log.e(Constants.LogMessage.TAG, "get failed with AAAAAA", exception)
             }
     }
 

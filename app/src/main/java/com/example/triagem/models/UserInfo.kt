@@ -5,4 +5,4 @@ import com.example.triagem.util.PatientState
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserInfo(var id: String, var infoMap: HashMap<String, String>?, var treatLevel: PatientState?): Parcelable
+data class UserInfo(var id: String, var infoMap: HashMap<String, String>?, var treatLevel: PatientState? = null): Parcelable

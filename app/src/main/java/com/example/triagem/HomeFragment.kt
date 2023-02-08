@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -14,10 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.triagem.models.UserInfo
-import com.example.triagem.register.RegisterFragmentDirections
 import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
+import com.example.triagem.util.SharedPrefHandler
 
 class HomeFragment : Fragment(), FirebaseCallback {
 
@@ -26,7 +27,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
     private lateinit var nameLabel: TextView
     private lateinit var bloodType: TextView
     private lateinit var loadingGif: ImageView
-    private var userID = "-1"
+    private var userID = Constants.User.NO_USER
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +42,14 @@ class HomeFragment : Fragment(), FirebaseCallback {
         getXmlInfo(view)
         fillUserCardInfo()
         getClickListeners()
+        saveIdPreference()
+
+
+    }
+
+    private fun saveIdPreference() {
+        val sharedPref = SharedPrefHandler(requireActivity())
+        sharedPref.saveString(Constants.User.CPF, userID)
     }
 
     private fun getXmlInfo(view: View) {
@@ -60,7 +69,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun getClickListeners() {
-        view?.findViewById<CardView>(R.id.card_register)?.setOnClickListener {
+        view?.findViewById<ImageButton>(R.id.edit_button)?.setOnClickListener {
             val directions = HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID, true)
             findNavController().navigate(directions)
         }
