@@ -5,23 +5,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.triagem.R
+import com.example.triagem.util.Diseases
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DiseaseListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DiseaseListFragment : Fragment() {
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_disease_list, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<TextView>(R.id.red_description).text = adjustList(Diseases.redDiseases)
+        view.findViewById<TextView>(R.id.orange_description).text = adjustList(Diseases.orangeDiseases)
+        view.findViewById<TextView>(R.id.yellow_description).text = adjustList(Diseases.yellowDiseases)
+        view.findViewById<TextView>(R.id.green_description).text = adjustList(Diseases.greenDiseases)
+        view.findViewById<TextView>(R.id.blue_description).text = adjustList(Diseases.blueDiseases)
+    }
+
+    private fun adjustList(list: List<String>): String {
+        var resultString = ""
+        list.forEach {
+            resultString += "\n- $it"
+        }
+
+        //Removing first \n
+        resultString = resultString.substring(1)
+        return resultString
+    }
 }

@@ -74,6 +74,10 @@ class HomeFragment : Fragment(), FirebaseCallback {
             findNavController().navigate(directions)
         }
 
+        view?.findViewById<CardView>(R.id.card_desease_list)?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_diseaseListFragment)
+        }
+
         view?.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
         }

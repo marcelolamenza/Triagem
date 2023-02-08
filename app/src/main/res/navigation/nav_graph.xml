@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_diseaseListFragment"
+            app:destination="@id/diseaseListFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -98,4 +101,9 @@
         android:name="com.example.triagem.wait.WaitFragment"
         android:label="fragment_wait"
         tools:layout="@layout/fragment_wait" />
+    <fragment
+        android:id="@+id/diseaseListFragment"
+        android:name="com.example.triagem.diseases.DiseaseListFragment"
+        android:label="fragment_disease_list"
+        tools:layout="@layout/fragment_disease_list" />
 </navigation>
