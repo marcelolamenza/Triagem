@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import com.example.triagem.R
 import com.example.triagem.util.Diseases
 
@@ -21,11 +23,29 @@ class DiseaseListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        view.findViewById<CardView>(R.id.title).setOnClickListener {
+            showExplanationDialog()
+        }
+
         view.findViewById<TextView>(R.id.red_description).text = adjustList(Diseases.redDiseases)
         view.findViewById<TextView>(R.id.orange_description).text = adjustList(Diseases.orangeDiseases)
         view.findViewById<TextView>(R.id.yellow_description).text = adjustList(Diseases.yellowDiseases)
         view.findViewById<TextView>(R.id.green_description).text = adjustList(Diseases.greenDiseases)
         view.findViewById<TextView>(R.id.blue_description).text = adjustList(Diseases.blueDiseases)
+    }
+
+    private fun showExplanationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Como funciona o sistema de cores?")
+        builder.setMessage(
+            "Cada uma das cores descreve um nível de risco que você corre por estar com tal enfermidade. " +
+                    " Quando você for pedir um atendimento, você deve descrever entre as opções a que mais se encaixa no que esta sentindo." +
+                    " O tempo de espera será calculado baseado no seu sintoma e na lotação do hospital." +
+                    "O tempo irá dar uma estimativa do tempo que você deve estar presente no hospital."
+        )
+        builder.setPositiveButton("Okay") { _, _ -> }
+
+        builder.show()
     }
 
     private fun adjustList(list: List<String>): String {

@@ -27,7 +27,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Listagem"
+                android:text="Listagem de enfermidades"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/letter_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lista de riscos associados ao estado atual"
+                android:text="Clique para mais informações"
                 android:textSize="@dimen/edit_text_letter_size_small"
                 app:layout_constraintEnd_toEndOf="@+id/textView2"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
