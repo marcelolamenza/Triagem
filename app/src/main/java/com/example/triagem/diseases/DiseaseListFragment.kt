@@ -38,12 +38,12 @@ class DiseaseListFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Como funciona o sistema de cores?")
         builder.setMessage(
-            "Cada uma das cores descreve um nível de risco que você corre por estar com tal enfermidade. " +
-                    " Quando você for pedir um atendimento, você deve descrever entre as opções a que mais se encaixa no que esta sentindo." +
-                    " O tempo de espera será calculado baseado no seu sintoma e na lotação do hospital." +
-                    "O tempo irá dar uma estimativa do tempo que você deve estar presente no hospital."
+            "Cada uma das cores descreve um nível de risco que você é associado por estar com tal enfermidade.\n" +
+                    "Quando pedir um atendimento, você deve descrever entre as opções a que mais se encaixa no que esta sentindo.\n" +
+                    "O tempo de espera será calculado baseado no seu sintoma e na lotação do hospital selecionado.\n" +
+                    "O aplicativo irá dar uma estimativa do tempo que você deve estar presente no hospital para ser efetivamente atendido."
         )
-        builder.setPositiveButton("Okay") { _, _ -> }
+        builder.setPositiveButton("Entendido") { _, _ -> }
 
         builder.show()
     }
@@ -53,7 +53,6 @@ class DiseaseListFragment : Fragment() {
         list.forEach {
             resultString += "\n- $it"
         }
-
         //Removing first \n
         resultString = resultString.substring(1)
         return resultString
