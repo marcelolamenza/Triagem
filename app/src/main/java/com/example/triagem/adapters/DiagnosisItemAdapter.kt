@@ -71,7 +71,7 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
 
     class DiagnosisItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val diseaseButton: Button by lazy { itemView.findViewById<Button>(R.id.label) }
-        var isClicked: Boolean = false
+        var isSelected: Boolean = false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiagnosisItemViewHolder {
@@ -86,7 +86,7 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
 
         holder.diseaseButton.text = debugItem.sickness
         holder.diseaseButton.alpha = debugItem.transparency
-        holder.isClicked = debugItem.isSelected
+        holder.isSelected = debugItem.isSelected
 
         if (debugItem.buttonColor != null) {
             holder.diseaseButton.backgroundTintList = debugItem.buttonColor
@@ -97,9 +97,9 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
         }
 
         holder.diseaseButton.setOnClickListener {
-            holder.isClicked = !holder.isClicked
+            holder.isSelected = !holder.isSelected
 
-            diagnosisCallback.clickAction(holder.diseaseButton, holder.isClicked, position)
+            diagnosisCallback.clickAction(holder.diseaseButton, holder.isSelected, position)
         }
     }
 

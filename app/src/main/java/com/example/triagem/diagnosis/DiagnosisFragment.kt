@@ -64,6 +64,10 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
             state = state.next()!!
         }
 
+        if (state == PatientState.UNMAPPED) {
+
+        }
+
         when (state) {
             PatientState.RED -> {
                 refillSameColor(Diseases.redDiseases)
@@ -81,8 +85,13 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
                 refillSameColor(Diseases.blueDiseases)
             }
             else -> {
+                blockNextButton()
             }
         }
+    }
+
+    private fun blockNextButton() {
+//        actionButton.
     }
 
     private fun refillSameColor(items: List<String>) {
@@ -108,35 +117,36 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
     }
 
     override fun clickAction(button: Button, isSelected: Boolean, position: Int) {
-        val buttonColor: ColorStateList
-        val buttonTextColor: ColorStateList
+        val selectedButtonColor: ColorStateList
+        val selectedButtonTextColor: ColorStateList
 
-        val neutralTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
-        val neutralBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+        val neutralButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        val neutralButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
 
         if (isSelected) {
             numberOfOptionsClicked++
-            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimaryDark))
-            buttonTextColor = ColorStateList.valueOf(resources.getColor(R.color.white))
+            selectedButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimaryDark))
+            selectedButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.white))
         } else {
             numberOfOptionsClicked--
-            buttonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
-            buttonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+            selectedButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+            selectedButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         }
 
-        button.backgroundTintList = buttonColor
-        button.setTextColor(buttonTextColor)
+        button.backgroundTintList = selectedButtonColor
+        button.setTextColor(selectedButtonTextColor)
 
         adapter.addTransparencyToOtherOptions(
             position,
             isSelected,
-            neutralBackgroundColor,
-            neutralTextColor
+            neutralButtonColor,
+            neutralButtonTextColor
         )
 
         if (numberOfOptionsClicked == 0) {
             actionButton.text = getString(R.string.action_button_no_option_selected)
         } else {
+            numberOfOptionsClicked = 1
             actionButton.text = getString(R.string.action_button_option_selested)
         }
     }
