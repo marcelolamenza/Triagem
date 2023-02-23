@@ -50,7 +50,7 @@ class WaitFragment : Fragment(), FirebaseCallback {
     private fun startUpdate() {
         object : CountDownTimer(10000, 2000) {
 
-            // Callback function, fired on regular interval
+            // Callback function, triggered on regular interval
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 peopleLeft = checkWaiting.retrievePeopleLeft()

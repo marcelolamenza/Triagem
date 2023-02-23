@@ -26,6 +26,13 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         notifyDataSetChanged()
     }
 
+    fun addMultipleItems(itemList: List<String>) {
+        for(item in itemList) {
+            registerItemList.add(RegisterItem(item))
+        }
+        notifyDataSetChanged()
+    }
+
     fun getItems(): MutableList<RegisterItem> {
         return registerItemList
     }
@@ -82,8 +89,8 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
     }
 
     class RegisterItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val label: TextView by lazy { itemView.findViewById<TextView>(R.id.label) }
-        val writingField: EditText by lazy { itemView.findViewById<EditText>(R.id.info) }
+        val label: TextView by lazy { itemView.findViewById(R.id.label) }
+        val writingField: EditText by lazy { itemView.findViewById(R.id.info) }
     }
 
     data class RegisterItem(val itemLabel: String, var itemDescription: String? = null)

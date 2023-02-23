@@ -26,6 +26,14 @@ class DiagnosisItemAdapter(private var diagnosisCallback: DiagnosisCallback) :
         notifyDataSetChanged()
     }
 
+    fun addMultipleItems(list: List<String>) {
+        for (item in list) {
+            diagnosisItemList.add(DiagnosisItem(item))
+        }
+
+        notifyDataSetChanged()
+    }
+
     fun addTransparencyToOtherOptions(
         position: Int,
         isSelected: Boolean,

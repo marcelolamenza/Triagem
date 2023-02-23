@@ -13,9 +13,9 @@ import com.example.triagem.hospitalCommunication.*
 import com.example.triagem.models.HospitalInfo
 import com.google.android.gms.maps.model.PointOfInterest
 
-class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCallback) : DialogFragment(), MockedHospitalCallback {
+class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: DialogCallback) : DialogFragment(), MockedHospitalCallback {
     lateinit var titleTextView: TextView
-    lateinit var button: Button
+    lateinit var actionButton: Button
     lateinit var capacity: TextView
     lateinit var hospitalCommunication: HospitalCommunicationInterface
 
@@ -31,8 +31,8 @@ class MapsDialog(private val poi: PointOfInterest, val dialogCallback: DialogCal
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTextView = view.findViewById(R.id.title)
-        button = view.findViewById(R.id.button)
-        button.setOnClickListener {
+        actionButton = view.findViewById(R.id.button)
+        actionButton.setOnClickListener {
             dialogCallback.dialogClick()
         }
 

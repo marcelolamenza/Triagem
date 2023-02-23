@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triagem.R
 import com.example.triagem.adapters.DiagnosisItemAdapter
+import com.example.triagem.util.Diseases
 import com.example.triagem.util.PatientState
 import kotlinx.android.synthetic.main.fragment_register.recycler_view
 
@@ -20,6 +21,8 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private var state = PatientState.FIRST_SLOT
     private var numberOfOptionsClicked = 0
     private lateinit var actionButton: Button
+    private var currentDiseaseListIndex = 0
+    private var hasMoreOptions = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,38 +60,51 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private fun fillRecycler() {
         adapter.clean()
 
-        state = state.next()!!
+        if(!hasMoreOptions) {
+            state = state.next()!!
+        }
 
         when (state) {
             PatientState.RED -> {
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("ACIDENTES AUTOMOBILISTICO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("TRAUMATISMO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("VITIMA DE ARMA DE FOGO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("INSUFICIENCIA RESPIRATÓRIA"))
+                refillSameColor(Diseases.redDiseases)
             }
             PatientState.ORANGE -> {
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("INFARTO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("HEMORRAGIA"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("FRATURA"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("PERDA DE CONSCIENCIA"))
+                refillSameColor(Diseases.orangeDiseases)
             }
             PatientState.YELLOW -> {
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("DESIDRATAÇÃO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("INFECÇÃO"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("HEMORRAGIA(LEVE)"))
+                refillSameColor(Diseases.yellowDiseases)
             }
             PatientState.GREEN -> {
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("DOR DE GARGANTA"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("FEBRE"))
-                adapter.addItem(DiagnosisItemAdapter.DiagnosisItem("TOSSE"))
-
+                refillSameColor(Diseases.greenDiseases)
             }
             PatientState.BLUE -> {
-
+                refillSameColor(Diseases.blueDiseases)
             }
             else -> {
             }
         }
+    }
+
+    private fun refillSameColor(items: List<String>) {
+        var maxSize = currentDiseaseListIndex + 4
+
+        if (maxSize >= items.size) {
+            maxSize = items.size
+            hasMoreOptions = false
+        } else {
+            hasMoreOptions = true
+        }
+
+        val subList = items.subList(currentDiseaseListIndex, maxSize)
+
+        currentDiseaseListIndex = if (hasMoreOptions) {
+            maxSize
+        } else {
+            0
+        }
+
+        adapter.addMultipleItems(subList)
+
     }
 
     override fun clickAction(button: Button, isSelected: Boolean, position: Int) {
@@ -97,7 +113,6 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 
         val neutralTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         val neutralBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
-
 
         if (isSelected) {
             numberOfOptionsClicked++

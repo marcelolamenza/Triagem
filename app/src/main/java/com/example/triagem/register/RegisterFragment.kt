@@ -18,6 +18,7 @@ import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlin.collections.HashMap
 
 class RegisterFragment : Fragment(), FirebaseCallback {
     private lateinit var recyclerView: RecyclerView
@@ -50,19 +51,26 @@ class RegisterFragment : Fragment(), FirebaseCallback {
 
             val userInfo = UserInfo(userId, userHashMap)
             val directions =
-                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(userInfo, isEditing)
+                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(
+                    userInfo,
+                    isEditing
+                )
 
             findNavController().navigate(directions)
         }
     }
 
     private fun fillRecyclerview() {
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.FIRST_NAME))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.LAST_NAME))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.RG))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.PHONE))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.ADDRESS))
-        adapter.addItem(RegisterItemAdapter.RegisterItem(Constants.User.EMAIL))
+        adapter.addMultipleItems(
+            listOf(
+                Constants.User.FIRST_NAME,
+                Constants.User.LAST_NAME,
+                Constants.User.RG,
+                Constants.User.PHONE,
+                Constants.User.ADDRESS,
+                Constants.User.EMAIL
+            )
+        )
 
         retrieveDataFromBundle()
 
@@ -75,10 +83,13 @@ class RegisterFragment : Fragment(), FirebaseCallback {
     }
 
     private fun retrieveDataFromBundle() {
-        if(arguments != null) {
+        if (arguments != null) {
             val bundle = arguments
             if (bundle == null) {
-                Log.e(Constants.LogMessage.ERROR, "Didn't receive information from RegisterFragment")
+                Log.e(
+                    Constants.LogMessage.ERROR,
+                    "Didn't receive information from RegisterFragment"
+                )
             } else {
                 val args = RegisterFragmentArgs.fromBundle(bundle)
 
@@ -107,7 +118,7 @@ class RegisterFragment : Fragment(), FirebaseCallback {
             info.itemDescription?.let { user.put(info.itemLabel, it) }
         }
 
-        if(isEditing) {
+        if (isEditing) {
             user[Constants.User.CPF] = userId
             user[Constants.User.PASSWORD] = password
             user[Constants.User.DISEASES] = diseases
@@ -116,8 +127,8 @@ class RegisterFragment : Fragment(), FirebaseCallback {
         return user
     }
 
-    private fun loadAnimationSetup(shouldRun: Boolean) {
-        if (shouldRun) {
+    private fun loadAnimationSetup(isRunning: Boolean) {
+        if (isRunning) {
             loadingGif.visibility = View.VISIBLE
             Glide.with(this).load(R.drawable.loading_purple).into(loadingGif)
         } else {
