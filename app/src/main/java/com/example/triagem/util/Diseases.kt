@@ -2,19 +2,17 @@ package com.example.triagem.util
 
 object Diseases {
     val redDiseases: List<String> = listOf(
-        "Acidentes automobilistico",
+        "Acidentes automobilístico",
         "Traumatismo",
-        "Vitima de arma de fogo",
-        "Insuficiencia respiratória",
-        "teste 1",
-        "teste 2"
+        "Vítima de arma de fogo",
+        "Insuficiência respiratória"
     )
 
     val orangeDiseases = listOf(
         "Infarto",
         "Hemorragia",
         "Fratura",
-        "Perda de consciencia"
+        "Perda de consciência"
     )
 
     val yellowDiseases = listOf(

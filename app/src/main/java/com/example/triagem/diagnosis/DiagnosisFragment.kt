@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_register.recycler_view
 
 class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private val adapter by lazy { DiagnosisItemAdapter(this) }
-    private var state = PatientState.FIRST_SLOT
+    private var currentState = PatientState.FIRST_SLOT
     private var numberOfOptionsClicked = 0
     private lateinit var actionButton: Button
     private var currentDiseaseListIndex = 0
@@ -61,28 +61,24 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         adapter.clean()
 
         if(!hasMoreOptions) {
-            state = state.next()!!
+            currentState = currentState.next()!!
         }
 
-        if (state == PatientState.UNMAPPED) {
-
-        }
-
-        when (state) {
+        when (currentState) {
             PatientState.RED -> {
-                refillSameColor(Diseases.redDiseases)
+                setOptionsToCurrentState(Diseases.redDiseases)
             }
             PatientState.ORANGE -> {
-                refillSameColor(Diseases.orangeDiseases)
+                setOptionsToCurrentState(Diseases.orangeDiseases)
             }
             PatientState.YELLOW -> {
-                refillSameColor(Diseases.yellowDiseases)
+                setOptionsToCurrentState(Diseases.yellowDiseases)
             }
             PatientState.GREEN -> {
-                refillSameColor(Diseases.greenDiseases)
+                setOptionsToCurrentState(Diseases.greenDiseases)
             }
             PatientState.BLUE -> {
-                refillSameColor(Diseases.blueDiseases)
+                setOptionsToCurrentState(Diseases.blueDiseases)
             }
             else -> {
                 blockNextButton()
@@ -94,7 +90,7 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 //        actionButton.
     }
 
-    private fun refillSameColor(items: List<String>) {
+    private fun setOptionsToCurrentState(items: List<String>) {
         var maxSize = currentDiseaseListIndex + 4
 
         if (maxSize >= items.size) {
