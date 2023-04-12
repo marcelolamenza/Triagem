@@ -49,10 +49,10 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
     override fun onBindViewHolder(holder: RegisterItemViewHolder, position: Int) {
         val registerItem = registerItemList.toList()[position]
 
-        holder.label.text = registerItem.itemLabel
+        holder.label.text = registerItem.name
 
-        if(registerItem.itemDescription != null) {
-            holder.writingField.setText(registerItem.itemDescription)
+        if(registerItem.currentInformation != null) {
+            holder.writingField.setText(registerItem.currentInformation)
         }
 
         applyMaskIntoHolder(holder, Constants.User.PHONE, "(##)#####-####")
@@ -60,17 +60,17 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         applyMaskIntoHolder(holder, Constants.User.RG, "##.###.###-#")
 
         holder.writingField.addTextChangedListener {
-            registerItemList.toList()[position].itemDescription = it.toString()
+            registerItemList.toList()[position].currentInformation = it.toString()
         }
     }
 
     private fun applyMaskIntoHolder(
         holder: RegisterItemViewHolder,
         ediTextType: String,
-        mask: String
+        format: String
     ) {
         if (holder.label.text == ediTextType) {
-            holder.writingField.addTextChangedListener(EditTextMask.mask(mask, holder.writingField))
+            holder.writingField.addTextChangedListener(EditTextMask.apply(format, holder.writingField))
             holder.writingField.inputType = InputType.TYPE_CLASS_NUMBER
         }
     }
@@ -78,8 +78,8 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
     fun updateFieldInformation(userInfo: UserInfo) {
         for((i, item) in registerItemList.withIndex()) {
             userInfo.infoMap?.forEach { info ->
-                if(item.itemLabel == info.key) {
-                    item.itemDescription = info.value
+                if(item.name == info.key) {
+                    item.currentInformation = info.value
                 }
             }
             notifyItemChanged(i)
@@ -93,5 +93,5 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         val writingField: EditText by lazy { itemView.findViewById(R.id.info) }
     }
 
-    data class RegisterItem(val itemLabel: String, var itemDescription: String? = null)
+    data class RegisterItem(val name: String, var currentInformation: String? = null)
 }

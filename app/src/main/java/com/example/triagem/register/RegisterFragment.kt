@@ -111,11 +111,11 @@ class RegisterFragment : Fragment(), FirebaseCallback {
     private fun getDataFromRecyclerView(): HashMap<String, String> {
         val user = hashMapOf<String, String>()
         for (info in adapter.getItems()) {
-            if (info.itemLabel == Constants.User.CPF) {
-                userId = info.itemDescription!!
+            if (info.name == Constants.User.CPF) {
+                userId = info.currentInformation!!
             }
 
-            info.itemDescription?.let { user.put(info.itemLabel, it) }
+            info.currentInformation?.let { user.put(info.name, it) }
         }
 
         if (isEditing) {

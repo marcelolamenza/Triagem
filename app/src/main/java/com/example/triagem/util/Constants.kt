@@ -13,6 +13,8 @@ object Constants {
         const val BLOOD_TYPE = "Tipo sanguineo"
         const val DISEASES = "Doenças"
 
+        const val TRIAGE_RESULT = "Triage_result"
+
         const val NO_USER = "-1"
     }
 
@@ -26,6 +28,7 @@ object Constants {
     object Firebase {
         const val DB_NAME_USERS = "users"
         const val DB_NAME_HOSPITAL = "hospitals"
+        const val DB_NAME_USER_QUEUE = "user_queue"
     }
 
     object LogMessage {

@@ -1,4 +1,4 @@
-package com.example.triagem.wait
+package com.example.triagem.fragments.wait
 
 class MockedWaitTime: CheckWaitTime {
     var currentPeopleWaiting = 80

@@ -98,9 +98,13 @@
     </fragment>
     <fragment
         android:id="@+id/waitFragment"
-        android:name="com.example.triagem.wait.WaitFragment"
+        android:name="com.example.triagem.fragments.wait.WaitFragment"
         android:label="fragment_wait"
-        tools:layout="@layout/fragment_wait" />
+        tools:layout="@layout/fragment_wait" >
+        <action
+            android:id="@+id/action_waitFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/diseaseListFragment"
         android:name="com.example.triagem.diseases.DiseaseListFragment"

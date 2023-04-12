@@ -39,20 +39,19 @@ class HomeFragment : Fragment(), FirebaseCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getXmlInfo(view)
+        bindViews(view)
+        setClickListeners(view)
+
         fillUserCardInfo()
-        getClickListeners()
-        saveIdPreference()
-
-
+        saveLoginPreference()
     }
 
-    private fun saveIdPreference() {
+    private fun saveLoginPreference() {
         val sharedPref = SharedPrefHandler(requireActivity())
         sharedPref.saveString(Constants.User.CPF, userID)
     }
 
-    private fun getXmlInfo(view: View) {
+    private fun bindViews(view: View) {
         userName = view.findViewById(R.id.name_info)
         userCard = view.findViewById(R.id.user_description)
         nameLabel = view.findViewById(R.id.name_label)
@@ -68,21 +67,22 @@ class HomeFragment : Fragment(), FirebaseCallback {
         firebase.retrieveUserData(userID)
     }
 
-    private fun getClickListeners() {
-        view?.findViewById<ImageButton>(R.id.edit_button)?.setOnClickListener {
-            val directions = HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID, true)
+    private fun setClickListeners(view: View) {
+        view.findViewById<ImageButton>(R.id.edit_button)?.setOnClickListener {
+            val directions =
+                HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID, true)
             findNavController().navigate(directions)
         }
 
-        view?.findViewById<CardView>(R.id.card_desease_list)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.card_desease_list)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_diseaseListFragment)
         }
 
-        view?.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
         }
 
-        view?.findViewById<CardView>(R.id.card_map)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.card_map)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_mapsFragment)
         }
     }
@@ -115,14 +115,10 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun retrieveLoginInfo() {
-        if (arguments != null) {
-            val bundle = arguments
-            if (bundle == null) {
-                Log.e(Constants.LogMessage.ERROR, "Didn't receive information from LoginFragment")
-            } else {
-                val args = HomeFragmentArgs.fromBundle(bundle)
-                userID = args.cpf
-            }
-        }
+        arguments?.let {
+            val args = HomeFragmentArgs.fromBundle(it)
+            userID = args.cpf
+        } ?: Log.e(Constants.LogMessage.ERROR, "Didn't receive information from LoginFragment")
+
     }
 }

@@ -11,16 +11,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triagem.R
 import com.example.triagem.adapters.DiagnosisItemAdapter
+import com.example.triagem.util.Constants
 import com.example.triagem.util.Diseases
 import com.example.triagem.util.PatientState
+import com.example.triagem.util.SharedPrefHandler
 import kotlinx.android.synthetic.main.fragment_register.recycler_view
-
 
 class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private val adapter by lazy { DiagnosisItemAdapter(this) }
     private var currentState = PatientState.FIRST_SLOT
-    private var numberOfOptionsClicked = 0
     private lateinit var actionButton: Button
+
+    private var numberOfOptionsClicked = 0
     private var currentDiseaseListIndex = 0
     private var hasMoreOptions = false
 
@@ -47,13 +49,16 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 
     private fun checkNextAction() {
         if (numberOfOptionsClicked != 0) {
-            solveTriagem()
+            solveTriage()
         } else {
             fillRecycler()
         }
     }
 
-    private fun solveTriagem() {
+    private fun solveTriage() {
+        val sharedPref = SharedPrefHandler(requireActivity())
+        sharedPref.saveString(Constants.User.TRIAGE_RESULT, currentState.toString())
+
         findNavController().navigate(R.id.action_checkFragment_to_mapsFragment)
     }
 
@@ -64,26 +69,16 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
             currentState = currentState.next()!!
         }
 
-        when (currentState) {
-            PatientState.RED -> {
-                setOptionsToCurrentState(Diseases.redDiseases)
-            }
-            PatientState.ORANGE -> {
-                setOptionsToCurrentState(Diseases.orangeDiseases)
-            }
-            PatientState.YELLOW -> {
-                setOptionsToCurrentState(Diseases.yellowDiseases)
-            }
-            PatientState.GREEN -> {
-                setOptionsToCurrentState(Diseases.greenDiseases)
-            }
-            PatientState.BLUE -> {
-                setOptionsToCurrentState(Diseases.blueDiseases)
-            }
-            else -> {
-                blockNextButton()
-            }
+        val diseases = when (currentState) {
+            PatientState.RED -> Diseases.redDiseases
+            PatientState.ORANGE -> Diseases.orangeDiseases
+            PatientState.YELLOW -> Diseases.yellowDiseases
+            PatientState.GREEN -> Diseases.greenDiseases
+            PatientState.BLUE -> Diseases.blueDiseases
+            else -> emptyList()
         }
+
+        setOptionsToCurrentState(diseases)
     }
 
     private fun blockNextButton() {
@@ -110,23 +105,27 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 
         adapter.addMultipleItems(subList)
 
+
+        // todo Testar essa otimização
+//        val maxSize = currentDiseaseListIndex + 4
+//        val subList = items.subList(currentDiseaseListIndex, maxSize.coerceAtMost(items.size))
+//        hasMoreOptions = maxSize < items.size
+//        currentDiseaseListIndex = if (hasMoreOptions) maxSize else 0
+//        adapter.addMultipleItems(subList)
     }
 
     override fun clickAction(button: Button, isSelected: Boolean, position: Int) {
         val selectedButtonColor: ColorStateList
         val selectedButtonTextColor: ColorStateList
 
-        val neutralButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
-        val neutralButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
-
         if (isSelected) {
             numberOfOptionsClicked++
-            selectedButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimaryDark))
-            selectedButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.white))
+            selectedButtonColor = retrieveColorResource(R.color.colorPrimaryDark)
+            selectedButtonTextColor = retrieveColorResource(R.color.white)
         } else {
             numberOfOptionsClicked--
-            selectedButtonColor = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
-            selectedButtonTextColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+            selectedButtonColor = retrieveColorResource(R.color.colorPrimary)
+            selectedButtonTextColor = retrieveColorResource(R.color.black)
         }
 
         button.backgroundTintList = selectedButtonColor
@@ -135,8 +134,8 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         adapter.addTransparencyToOtherOptions(
             position,
             isSelected,
-            neutralButtonColor,
-            neutralButtonTextColor
+            retrieveColorResource(R.color.colorPrimary),
+            retrieveColorResource(R.color.black)
         )
 
         if (numberOfOptionsClicked == 0) {
@@ -145,5 +144,9 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
             numberOfOptionsClicked = 1
             actionButton.text = getString(R.string.action_button_option_selested)
         }
+    }
+
+    private fun retrieveColorResource(color: Int): ColorStateList {
+        return ColorStateList.valueOf(resources.getColor(color))
     }
 }

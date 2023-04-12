@@ -32,11 +32,11 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
         sharedPref = SharedPrefHandler(requireActivity())
         userName = view.findViewById(R.id.user_edit)
-        userName.addTextChangedListener(EditTextMask.mask("###.###.###-##", userName))
+        userName.addTextChangedListener(EditTextMask.apply("###.###.###-##", userName))
         password = view.findViewById(R.id.editPassword)
         loadingGif = view.findViewById(R.id.loading_gif)
 
-        if(sharedPref.getString(Constants.SharedPref.FIRST_LOGIN) == Constants.SharedPref.DEFAULT_VALUE) {
+        if (sharedPref.getString(Constants.SharedPref.FIRST_LOGIN) == Constants.SharedPref.DEFAULT_VALUE) {
             showWelcomeDialogs()
         }
 
@@ -45,10 +45,10 @@ class LoginFragment : Fragment(), FirebaseCallback {
             val filledPassword = password.text.toString()
 
             when {
-                id.isNullOrEmpty() -> {
+                id.isEmpty() -> {
                     CustomToast.showBottom(requireActivity(), "Insira um usuario!")
                 }
-                filledPassword.isNullOrEmpty() -> {
+                filledPassword.isEmpty() -> {
                     CustomToast.showBottom(requireActivity(), "Insira uma senha!")
                 }
                 else -> {

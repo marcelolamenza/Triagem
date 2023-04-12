@@ -13,7 +13,7 @@ class EditTextMask {
                 .replace("*", "")
         }
 
-        fun mask(mask: String, etCpf: EditText): TextWatcher {
+        fun apply(mask: String, etCpf: EditText): TextWatcher {
             val textWatcher: TextWatcher = object : TextWatcher {
                 var isUpdating: Boolean = false
                 var oldString: String = ""

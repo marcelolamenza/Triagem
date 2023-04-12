@@ -1,4 +1,4 @@
-package com.example.triagem.wait
+package com.example.triagem.fragments.wait
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
@@ -19,6 +22,13 @@ class WaitFragment : Fragment(), FirebaseCallback {
     lateinit var peopleText: TextView
     lateinit var checkWaiting: CheckWaitTime
     var peopleLeft = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            handleBackPress()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +44,8 @@ class WaitFragment : Fragment(), FirebaseCallback {
         checkWaiting = MockedWaitTime()
         peopleText = view.findViewById(R.id.waiting_users)
 
-        val pref = requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
+        val pref =
+            requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
         val id = pref.getString(Constants.User.CPF, "")
 
         val firebase = FirebaseHandler()
@@ -70,9 +81,18 @@ class WaitFragment : Fragment(), FirebaseCallback {
         }.start()
     }
 
+    private fun handleBackPress() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Você deseja cancelar a espera?")
+        builder.setPositiveButton("Sim") { _, _ ->
+            findNavController().navigate(R.id.action_waitFragment_to_homeFragment)
+        }
+        builder.setNegativeButton("Não") { _, _ -> }
+
+        builder.show()
+    }
+
     override fun onDatabaseResponse(userFinal: UserInfo) {
-
-
         startUpdate()
     }
 }
