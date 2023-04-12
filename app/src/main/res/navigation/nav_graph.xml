@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.triagem.register.RegisterFragment"
+        android:name="com.example.triagem.fragments.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkFragment"
-        android:name="com.example.triagem.diagnosis.DiagnosisFragment"
+        android:name="com.example.triagem.fragments.diagnosis.DiagnosisFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check" >
         <action
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerDetailsFragment"
-        android:name="com.example.triagem.register.RegisterContinuationFragment"
+        android:name="com.example.triagem.fragments.register.RegisterContinuationFragment"
         android:label="fragment_register_details"
         tools:layout="@layout/fragment_register_continuation" >
         <argument
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.triagem.maps.MapsFragment"
+        android:name="com.example.triagem.fragments.maps.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -107,7 +107,7 @@
     </fragment>
     <fragment
         android:id="@+id/diseaseListFragment"
-        android:name="com.example.triagem.diseases.DiseaseListFragment"
+        android:name="com.example.triagem.fragments.diseases.DiseaseListFragment"
         android:label="fragment_disease_list"
         tools:layout="@layout/fragment_disease_list" />
 </navigation>

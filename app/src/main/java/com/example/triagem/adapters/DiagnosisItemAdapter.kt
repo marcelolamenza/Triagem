@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.triagem.R
-import com.example.triagem.diagnosis.DiagnosisCallback
+import com.example.triagem.fragments.diagnosis.DiagnosisCallback
 import com.example.triagem.util.inflate
 
 

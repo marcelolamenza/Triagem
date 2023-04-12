@@ -1,4 +1,4 @@
-package com.example.triagem.register
+package com.example.triagem.fragments.register
 
 import android.os.Bundle
 import android.util.Log

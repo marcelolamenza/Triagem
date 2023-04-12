@@ -1,4 +1,4 @@
-package com.example.triagem.diseases
+package com.example.triagem.fragments.diseases
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

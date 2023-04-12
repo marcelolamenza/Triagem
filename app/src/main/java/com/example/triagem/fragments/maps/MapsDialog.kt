@@ -1,4 +1,4 @@
-package com.example.triagem.maps
+package com.example.triagem.fragments.maps
 
 import android.annotation.SuppressLint
 import android.os.Bundle
