@@ -81,7 +81,7 @@ class LoginFragment : Fragment(), FirebaseCallback {
 
         createAlertDialog(
             "Este aplicativo tem o intuito de facilitar a entrada de pacientes em " +
-                    "hospitais, facilitando o processo de triagem e trazendo informações sobre os hospitais!",
+                    "hospitais, facilitando o processo de triagem e trazendo informações sobre os o ambiente físico de cada um deles!",
             "Próximo"
         ).show()
 

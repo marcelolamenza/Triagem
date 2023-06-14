@@ -41,7 +41,7 @@ class DiseaseListFragment : Fragment() {
             "Cada uma das cores descreve um nível de risco que você é associado por estar com tal enfermidade.\n" +
                     "Quando pedir um atendimento, você deve descrever entre as opções a que mais se encaixa no que esta sentindo.\n" +
                     "O tempo de espera será calculado baseado no seu sintoma e na lotação do hospital selecionado.\n" +
-                    "O aplicativo irá dar uma estimativa do tempo que você deve estar presente no hospital para ser efetivamente atendido."
+                    "O aplicativo fornecerá uma estimativa do tempo que você deve estar presente no hospital para ser efetivamente atendido."
         )
         builder.setPositiveButton("Entendido") { _, _ -> }
 
