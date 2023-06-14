@@ -24,7 +24,6 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
     private lateinit var userCard: ConstraintLayout
     private lateinit var userName: TextView
-    private lateinit var nameLabel: TextView
     private lateinit var bloodType: TextView
     private lateinit var loadingGif: ImageView
     private var userID = Constants.User.NO_USER
@@ -54,7 +53,6 @@ class HomeFragment : Fragment(), FirebaseCallback {
     private fun bindViews(view: View) {
         userName = view.findViewById(R.id.name_info)
         userCard = view.findViewById(R.id.user_description)
-        nameLabel = view.findViewById(R.id.name_label)
         bloodType = view.findViewById(R.id.blood_type)
         loadingGif = view.findViewById(R.id.loading_gif)
     }
@@ -110,7 +108,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
             userName.text = "$firstName $lastName"
             bloodType.text = userFinal.infoMap?.get(Constants.User.BLOOD_TYPE) ?: ""
         } else {
-            nameLabel.text = "Nenhum usuario encontrado"
+            userName.text = "Nenhum usuario encontrado"
         }
     }
 
