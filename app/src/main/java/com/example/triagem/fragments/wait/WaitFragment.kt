@@ -12,13 +12,17 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import com.example.triagem.LoginFragmentDirections
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
 import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
+import com.example.triagem.util.SharedPrefHandler
+import kotlin.math.log
 
 class WaitFragment : Fragment(), FirebaseCallback {
+    private lateinit var sharedPref: SharedPrefHandler
     lateinit var peopleText: TextView
     lateinit var checkWaiting: CheckWaitTime
     var peopleLeft = 0
@@ -40,6 +44,7 @@ class WaitFragment : Fragment(), FirebaseCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = SharedPrefHandler(requireActivity())
 
         checkWaiting = MockedWaitTime()
         peopleText = view.findViewById(R.id.waiting_users)
@@ -85,11 +90,17 @@ class WaitFragment : Fragment(), FirebaseCallback {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Você deseja cancelar a espera?")
         builder.setPositiveButton("Sim") { _, _ ->
-            findNavController().navigate(R.id.action_waitFragment_to_homeFragment)
+            returnToHomeScreen()
         }
         builder.setNegativeButton("Não") { _, _ -> }
 
         builder.show()
+    }
+
+    private fun returnToHomeScreen() {
+        val login = sharedPref.getString(Constants.SharedPref.LOGIN)
+        val directions = WaitFragmentDirections.actionWaitFragmentToHomeFragment(login!!)
+        findNavController().navigate(directions)
     }
 
     override fun onDatabaseResponse(userFinal: UserInfo) {

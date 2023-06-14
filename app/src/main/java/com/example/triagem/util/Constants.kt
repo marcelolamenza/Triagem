@@ -41,5 +41,6 @@ object Constants {
         const val NAME = "shared"
         const val FIRST_LOGIN = "firstLogin"
         const val DEFAULT_VALUE = ""
+        const val LOGIN = "login"
     }
 }

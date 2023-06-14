@@ -121,6 +121,7 @@ class LoginFragment : Fragment(), FirebaseCallback {
                 CustomToast.showBottom(requireActivity(), "Usuário incorreto!!")
             }
             userFinal.infoMap!![Constants.User.PASSWORD] == password.text.toString() -> {
+                sharedPref.saveString(Constants.SharedPref.LOGIN, userName.text.toString())
                 val directions =
                     LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.text.toString())
                 findNavController().navigate(directions)
