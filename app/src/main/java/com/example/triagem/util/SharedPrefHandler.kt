@@ -14,6 +14,13 @@ class SharedPrefHandler(private val activity: Activity) {
 
     fun getString(key: String): String? {
         return preferences.getString(key, Constants.SharedPref.DEFAULT_VALUE)
+    }
 
+    fun saveBoolean(key: String, value: Boolean) {
+        preferences.edit().putBoolean(key, value).apply()
+    }
+
+    fun getBoolean(key: String): Boolean {
+        return preferences.getBoolean(key, false)
     }
 }

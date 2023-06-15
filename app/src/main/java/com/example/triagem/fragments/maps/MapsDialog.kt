@@ -11,6 +11,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.triagem.R
 import com.example.triagem.hospitalCommunication.*
 import com.example.triagem.models.HospitalInfo
+import com.example.triagem.util.Constants
+import com.example.triagem.util.SharedPrefHandler
 import com.google.android.gms.maps.model.PointOfInterest
 
 class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: DialogCallback) : DialogFragment(), MockedHospitalCallback {
@@ -32,6 +34,14 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTextView = view.findViewById(R.id.title)
         actionButton = view.findViewById(R.id.button)
+
+        val sharedPref = SharedPrefHandler(requireActivity())
+        val isViewMode = sharedPref.getBoolean(Constants.Maps.IS_VIEW_MODE)
+
+        if (isViewMode) {
+            actionButton.text = "Fechar"
+        }
+
         actionButton.setOnClickListener {
             dialogCallback.dialogClick()
         }

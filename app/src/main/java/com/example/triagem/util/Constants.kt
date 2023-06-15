@@ -37,6 +37,10 @@ object Constants {
         const val DEV_ERROR = "O dev fez algo de errado"
     }
 
+    object Maps {
+        const val IS_VIEW_MODE = "view_mode";
+    }
+
     object SharedPref {
         const val NAME = "shared"
         const val FIRST_LOGIN = "firstLogin"

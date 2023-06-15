@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.triagem.R
+import com.example.triagem.util.Constants
+import com.example.triagem.util.SharedPrefHandler
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -131,7 +133,13 @@ class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener, MapsDialog.Dialog
     }
 
     override fun dialogClick() {
+        val sharedPref = SharedPrefHandler(requireActivity())
+        val isViewMode = sharedPref.getBoolean(Constants.Maps.IS_VIEW_MODE)
+
+        if (!isViewMode) {
+            findNavController().navigate(R.id.action_mapsFragment_to_waitFragment)
+        }
         poiDialog.dismiss()
-        findNavController().navigate(R.id.action_mapsFragment_to_waitFragment)
+
     }
 }

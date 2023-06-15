@@ -39,10 +39,11 @@ class HomeFragment : Fragment(), FirebaseCallback {
         super.onViewCreated(view, savedInstanceState)
 
         bindViews(view)
+        saveLoginPreference()
+
         setClickListeners(view)
 
         fillUserCardInfo()
-        saveLoginPreference()
     }
 
     private fun saveLoginPreference() {
@@ -66,6 +67,8 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun setClickListeners(view: View) {
+        val sharedPref = SharedPrefHandler(requireActivity())
+
         view.findViewById<ImageButton>(R.id.edit_button)?.setOnClickListener {
             val directions =
                 HomeFragmentDirections.actionHomeFragmentToRegisterFragment(userID, true)
@@ -77,10 +80,12 @@ class HomeFragment : Fragment(), FirebaseCallback {
         }
 
         view.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
+            sharedPref.saveBoolean(Constants.Maps.IS_VIEW_MODE, false)
             findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
         }
 
         view.findViewById<CardView>(R.id.card_map)?.setOnClickListener {
+            sharedPref.saveBoolean(Constants.Maps.IS_VIEW_MODE, true)
             findNavController().navigate(R.id.action_homeFragment_to_mapsFragment)
         }
     }
