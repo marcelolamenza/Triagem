@@ -15,6 +15,7 @@ import com.example.triagem.R
 import com.example.triagem.adapters.RegisterItemAdapter
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.Constants
+import com.example.triagem.util.CustomToast
 import com.example.triagem.util.FirebaseCallback
 import com.example.triagem.util.FirebaseHandler
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -49,18 +50,25 @@ class RegisterFragment : Fragment(), FirebaseCallback {
         btn_register.setOnClickListener {
             val userHashMap = getDataFromRecyclerView()
 
-            val userInfo = UserInfo(userId, userHashMap)
-            val directions =
-                RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(
-                    userInfo,
-                    isEditing
-                )
+            if (userHashMap == null) {
+                CustomToast.showBottom(requireActivity(), "Todos os campos devem ser preenchidos!")
+            } else {
+                val userInfo = UserInfo(userId, userHashMap)
+                val directions =
+                    RegisterFragmentDirections.actionRegisterFragmentToRegisterDetailsFragment(
+                        userInfo,
+                        isEditing
+                    )
 
-            findNavController().navigate(directions)
+                findNavController().navigate(directions)
+            }
+
         }
     }
 
     private fun fillRecyclerview() {
+        adapter.clean()
+
         adapter.addMultipleItems(
             listOf(
                 Constants.User.FIRST_NAME,
@@ -108,9 +116,13 @@ class RegisterFragment : Fragment(), FirebaseCallback {
         firebase.retrieveUserData(id)
     }
 
-    private fun getDataFromRecyclerView(): HashMap<String, String> {
+    private fun getDataFromRecyclerView(): HashMap<String, String>? {
         val user = hashMapOf<String, String>()
         for (info in adapter.getItems()) {
+            if (info.currentInformation == null) {
+                return null
+            }
+
             if (info.name == Constants.User.CPF) {
                 userId = info.currentInformation!!
             }

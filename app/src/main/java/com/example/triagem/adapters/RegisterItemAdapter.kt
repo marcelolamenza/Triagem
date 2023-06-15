@@ -33,6 +33,11 @@ class RegisterItemAdapter : RecyclerView.Adapter<RegisterItemAdapter.RegisterIte
         notifyDataSetChanged()
     }
 
+    fun clean() {
+        registerItemList.removeAll(registerItemList)
+        notifyDataSetChanged()
+    }
+
     fun getItems(): MutableList<RegisterItem> {
         return registerItemList
     }

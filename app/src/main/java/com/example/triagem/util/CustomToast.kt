@@ -26,7 +26,7 @@ class CustomToast() {
             val drawable = ContextCompat.getDrawable(context, R.drawable.toast_round_background)
             layout.background = drawable
 
-            layout.custom_toast_message.setTextColor(Color.WHITE)
+            layout.custom_toast_message.setTextColor(Color.BLACK)
             layout.custom_toast_message.text = message
 
 
