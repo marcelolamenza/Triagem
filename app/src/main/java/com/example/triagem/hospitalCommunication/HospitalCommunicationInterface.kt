@@ -1,8 +1,10 @@
 package com.example.triagem.hospitalCommunication
 
+import com.example.triagem.models.HospitalInfo
+
 interface HospitalCommunicationInterface {
     fun sendInformation()
-    fun getHospitalInformation(): Long
+    fun getHospitalInformation(): HospitalInfo
     fun getPatientsList()
     fun getPatientsTotal(): Long
 }

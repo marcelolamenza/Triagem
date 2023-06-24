@@ -15,7 +15,7 @@ import com.example.triagem.util.Constants
 import com.example.triagem.util.SharedPrefHandler
 import com.google.android.gms.maps.model.PointOfInterest
 
-class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: DialogCallback) : DialogFragment(), MockedHospitalCallback {
+class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: DialogCallback) : DialogFragment() {
     lateinit var titleTextView: TextView
     lateinit var actionButton: Button
     lateinit var capacity: TextView
@@ -47,9 +47,11 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
         }
 
         capacity = view.findViewById(R.id.capacity)
-        hospitalCommunication = MockedHospitalCommunication(poi, this)
-        hospitalCommunication.getHospitalInformation()
 
+        hospitalCommunication = MockedHospitalCommunication(poi)
+
+        val hospitalInfo = hospitalCommunication.getHospitalInformation()
+        fillHospitalInformation(hospitalInfo)
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -61,8 +63,7 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun fillHospitalInformation(hospitalInfo: HospitalInfo) {
+    private fun fillHospitalInformation(hospitalInfo: HospitalInfo) {
         val sharedPrefHandler = SharedPrefHandler(requireActivity())
         sharedPrefHandler.saveDataClass(Constants.SharedPref.CURRENT_HOSPITAL, hospitalInfo)
 
