@@ -24,15 +24,14 @@ object Diseases {
     )
 
     val greenDiseases = listOf(
-        "Dor de garganta",
-        "Febre",
-        "Tosse"
-        //"Vômitos"
+        "Dor de cabeça moderada",
+        "Lesão simples",
+        "Reação alérgica leve"
     )
 
     val blueDiseases = listOf(
-        "???",
-        "???",
-        "???"
+        "Resfriado",
+        "Dor de garganta leve",
+        "Dor de cabeça leve"
     )
 }

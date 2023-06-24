@@ -63,12 +63,13 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun fillHospitalInformation(hospitalInfo: HospitalInfo) {
         val sharedPrefHandler = SharedPrefHandler(requireActivity())
         sharedPrefHandler.saveDataClass(Constants.SharedPref.CURRENT_HOSPITAL, hospitalInfo)
 
         titleTextView.text = hospitalInfo.name
-        capacity.text = "Lotação: ${hospitalInfo.actualPopulation}/ ${hospitalInfo.totalCapacity}"
+        capacity.text = "Lotação: ${hospitalInfo.population.getTotal()}/ ${hospitalInfo.totalCapacity}"
     }
 
     interface DialogCallback {

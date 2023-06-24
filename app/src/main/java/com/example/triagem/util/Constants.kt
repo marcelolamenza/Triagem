@@ -49,5 +49,7 @@ object Constants {
         const val LOGIN = "login"
         const val SERVICE_ONGOING = "SERVICE_ONGOING"
         const val CURRENT_HOSPITAL = "CURRENT_HOSPITAL"
+        const val CURRENT_TIME = "CURRENT_TIME"
+        const val CURRENT_NUMBER = "CURRENT_NUMBER"
     }
 }

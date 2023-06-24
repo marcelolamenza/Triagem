@@ -1,7 +1,6 @@
 package com.example.triagem.fragments.wait
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
@@ -14,18 +13,20 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.example.triagem.LoginFragmentDirections
 import com.example.triagem.R
 import com.example.triagem.models.HospitalInfo
-import com.example.triagem.models.UserInfo
 import com.example.triagem.util.*
-import kotlin.math.log
 
-class WaitFragment : Fragment(), FirebaseCallback {
+class WaitFragment : Fragment() {
     private lateinit var sharedPref: SharedPrefHandler
-    private lateinit var peopleText: TextView
-    private lateinit var checkWaiting: CheckWaitTime
-    private var peopleLeft = 0
+
+    private var contador: CountDownTimer? = null
+
+    private var currentNumber = 0
+    private var currentColor = ""
+
+    lateinit var peopleLeftText: TextView
+    lateinit var waitingTimeText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,72 +44,122 @@ class WaitFragment : Fragment(), FirebaseCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        peopleLeftText = view.findViewById(R.id.waiting_users)
+        waitingTimeText = view.findViewById(R.id.waiting_time)
+
         sharedPref = SharedPrefHandler(requireActivity())
-
-//        checkWaiting = MockedWaitTime()
-//        peopleText = view.findViewById(R.id.waiting_users)
-//        val pref =
-//            requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
-//        val id = pref.getString(Constants.User.CPF, "")
-//        val firebase = FirebaseHandler()
-//        id?.let { firebase.retrieveUserData(it) }
-        //findDatabase() //todo pegar o banco e carregar ID aqui, depois usar o dados dele para mostrar na tela
-        //todo pegar o nivel de perigo e adicionar o tempo certo
-
-        val waitingSize = view.findViewById<TextView>(R.id.waiting_users)
-        val waitingTime = view.findViewById<TextView>(R.id.waiting_time)
         val hospitalInfo = sharedPref.getDataClass<HospitalInfo>(Constants.SharedPref.CURRENT_HOSPITAL)
 
-        waitingSize.text = hospitalInfo!!.actualPopulation.toString()
-        waitingTime.text = calculateTime()
+        currentColor = sharedPref.getString(Constants.User.TRIAGE_COLOR)!!
 
-        val currentDisease = sharedPref.getString(Constants.User.TRIAGE_DISEASE)
-        val currentColor = sharedPref.getString(Constants.User.TRIAGE_COLOR)
-        sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, true)
+        if (!sharedPref.getBoolean(Constants.SharedPref.SERVICE_ONGOING)) {
+            sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, true)
+            currentNumber = getTotalWaitingNumber(hospitalInfo!!, currentColor)
 
-        val textCurrentDisease = view.findViewById<TextView>(R.id.description)
-        textCurrentDisease.text = currentDisease
-        textCurrentDisease.setTextColor(getDiseaseColor(currentColor!!))
+        } else {
+            currentNumber = sharedPref.getInt(Constants.SharedPref.CURRENT_NUMBER)
+        }
+
+        peopleLeftText.text = currentNumber.toString()
+        waitingTimeText.text = getCurrentTime()
+        setCurrentDisease(view)
 
         view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
             handleBackPress()
         }
+
+        if (contador == null) {
+            startUpdate()
+        }
     }
 
-    private fun calculateTime(): String {
-        //todo ajustar
-        return "50 m"
+    private fun getCurrentTime(): String {
+        val currentTime = calculateTotalTime(currentNumber, currentColor)
+        return currentTime.toString()
     }
 
-    private fun getDiseaseColor(color: String) : Int{
+    private fun setCurrentDisease(view: View) {
+        val currentDisease = sharedPref.getString(Constants.User.TRIAGE_DISEASE)
+
+        val textCurrentDisease = view.findViewById<TextView>(R.id.description)
+        textCurrentDisease.text = currentDisease
+        textCurrentDisease.setTextColor(getDiseaseColor(currentColor))
+    }
+
+
+    private fun getTotalWaitingNumber(hospitalInfo: HospitalInfo, currentColor: String): Int {
+        val population = hospitalInfo.population
+
+        val result = when (currentColor) {
+            PatientState.RED.toString() -> population.red
+            PatientState.ORANGE.toString() -> population.red + population.orange
+            PatientState.YELLOW.toString() -> population.red + population.orange + population.yellow
+            PatientState.GREEN.toString() -> population.red + population.orange + population.yellow + population.green
+            else -> population.red + population.orange + population.yellow + population.green + population.blue
+        }
+
+        return result + 1
+    }
+
+    private fun calculateTotalTime(currentNumber: Int, currentColor: String): Int {
+        val result: Int = when (currentColor) {
+            PatientState.RED.toString() -> 0
+            PatientState.ORANGE.toString() -> currentNumber * 1.coerceAtMost(10)
+            PatientState.YELLOW.toString() -> currentNumber * 2.coerceAtMost(30)
+            PatientState.GREEN.toString() -> currentNumber * 3.coerceAtMost(60)
+            else -> currentNumber * 4.coerceAtMost(120)
+        }
+
+        return result
+    }
+
+    private fun getDiseaseColor(color: String): Int {
         return when (color) {
             PatientState.RED.toString() -> ContextCompat.getColor(requireContext(), R.color.red)
-            PatientState.ORANGE.toString() -> ContextCompat.getColor(requireContext(), R.color.orange)
-            PatientState.YELLOW.toString() -> ContextCompat.getColor(requireContext(), R.color.yellow)
+            PatientState.ORANGE.toString() -> ContextCompat.getColor(
+                requireContext(),
+                R.color.orange
+            )
+            PatientState.YELLOW.toString() -> ContextCompat.getColor(
+                requireContext(),
+                R.color.yellow
+            )
             PatientState.GREEN.toString() -> ContextCompat.getColor(requireContext(), R.color.green)
             else -> ContextCompat.getColor(requireContext(), R.color.blue)
         }
     }
 
     private fun startUpdate() {
-        object : CountDownTimer(10000, 2000) {
+        val totalTime = calculateTotalTime(currentNumber, currentColor)
+        contador = object : CountDownTimer((totalTime * 1000).toLong(), 1000) {
 
-            // Callback function, triggered on regular interval
-            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
-                peopleLeft = checkWaiting.retrievePeopleLeft()
+                if (currentNumber <= 0) {
+                    currentNumber = 0
+                    peopleLeftText.text = currentNumber.toString()
+                    waitingTimeText.text = getCurrentTime()
 
-                peopleText.text = "$peopleLeft "
+                    cancel()
+                } else {
+                    currentNumber -= 1
+                    peopleLeftText.text = currentNumber.toString()
+                    waitingTimeText.text = getCurrentTime()
+
+                    sharedPref.saveInt(Constants.SharedPref.CURRENT_NUMBER, currentNumber)
+                }
             }
 
             @SuppressLint("SetTextI18n")
             override fun onFinish() {
+                sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, false)
 
-                if (peopleLeft == 0) {
-                    peopleText.text = "DONE"
-                } else {
-                    start()
-                }
+                peopleLeftText.text = "Espera finalizada"
+
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Sua vez chegou!")
+                builder.setMessage("Por favor se encaminhar a um atendente para prosseguir com seu tratamento.")
+                builder.setPositiveButton("Confirmar") { _, _ -> }
+                builder.show()
             }
         }.start()
     }
@@ -129,9 +180,5 @@ class WaitFragment : Fragment(), FirebaseCallback {
         val login = sharedPref.getString(Constants.SharedPref.LOGIN)
         val directions = WaitFragmentDirections.actionWaitFragmentToHomeFragment(login!!)
         findNavController().navigate(directions)
-    }
-
-    override fun onDatabaseResponse(userFinal: UserInfo) {
-        startUpdate()
     }
 }
