@@ -19,13 +19,15 @@ import kotlinx.android.synthetic.main.fragment_register.recycler_view
 
 class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private val adapter by lazy { DiagnosisItemAdapter(this) }
-    private var currentState = PatientState.FIRST_SLOT
-    private lateinit var chooseNextOptionsButton: Button
-    private lateinit var confirmOptionButton: Button
 
+    private var currentState = PatientState.FIRST_SLOT
     private var numberOfOptionsClicked = 0
     private var currentDiseaseListIndex = 0
     private var hasMoreOptions = false
+
+    private lateinit var chooseNextOptionsButton: Button
+    private lateinit var confirmOptionButton: Button
+    private lateinit var sharedPref: SharedPrefHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,8 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedPref = SharedPrefHandler(requireActivity())
 
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(context)
@@ -54,17 +58,8 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         enableButton(confirmOptionButton, false)
     }
 
-    private fun checkNextAction() {
-        if (numberOfOptionsClicked != 0) {
-            solveTriage()
-        } else {
-            fillRecycler()
-        }
-    }
-
     private fun solveTriage() {
-        val sharedPref = SharedPrefHandler(requireActivity())
-        sharedPref.saveString(Constants.User.TRIAGE_RESULT, currentState.toString())
+        sharedPref.saveString(Constants.User.TRIAGE_COLOR, currentState.toString())
 
         findNavController().navigate(R.id.action_checkFragment_to_mapsFragment)
     }
@@ -117,6 +112,9 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
             numberOfOptionsClicked++
             selectedButtonColor = retrieveColorResource(R.color.colorPrimaryDark)
             selectedButtonTextColor = retrieveColorResource(R.color.white)
+
+            sharedPref.saveString(Constants.User.TRIAGE_DISEASE, button.text.toString())
+
         } else {
             numberOfOptionsClicked--
             selectedButtonColor = retrieveColorResource(R.color.colorPrimary)

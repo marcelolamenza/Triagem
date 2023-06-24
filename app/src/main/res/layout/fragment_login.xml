@@ -121,9 +121,9 @@
         android:id="@+id/new_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PRIMEIRO ACESSO"
+        android:text="Primeiro acesso"
         android:textSize="16dp"
-
+        android:textAllCaps="false"
         android:paddingHorizontal="24dp"
         android:paddingVertical="16dp"
         android:layout_margin="16dp"

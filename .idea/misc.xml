@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/arrow_forward_ios.xml" value="0.105" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/card_background.xml" value="0.1465" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/circle_background.xml" value="0.1465" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/ic__23_medicine_book.xml" value="0.1465" />
@@ -13,6 +14,8 @@
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/rectangle_with_corners_background.xml" value="0.1465" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/round_corner.xml" value="0.1415" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/toast_round_background.xml" value="0.1465" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/warning-48px.xml" value="0.123" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/warning_48px.xml" value="0.1" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/custom_toast_layout.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/dialog_maps.xml" value="0.15260416666666668" />

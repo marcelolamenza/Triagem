@@ -8,24 +8,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.triagem.LoginFragmentDirections
 import com.example.triagem.R
 import com.example.triagem.models.UserInfo
-import com.example.triagem.util.Constants
-import com.example.triagem.util.FirebaseCallback
-import com.example.triagem.util.FirebaseHandler
-import com.example.triagem.util.SharedPrefHandler
+import com.example.triagem.util.*
 import kotlin.math.log
 
 class WaitFragment : Fragment(), FirebaseCallback {
     private lateinit var sharedPref: SharedPrefHandler
-    lateinit var peopleText: TextView
-    lateinit var checkWaiting: CheckWaitTime
-    var peopleLeft = 0
+    private lateinit var peopleText: TextView
+    private lateinit var checkWaiting: CheckWaitTime
+    private var peopleLeft = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +37,6 @@ class WaitFragment : Fragment(), FirebaseCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_wait, container, false)
     }
 
@@ -46,21 +44,38 @@ class WaitFragment : Fragment(), FirebaseCallback {
         super.onViewCreated(view, savedInstanceState)
         sharedPref = SharedPrefHandler(requireActivity())
 
-        checkWaiting = MockedWaitTime()
-        peopleText = view.findViewById(R.id.waiting_users)
-
-        val pref =
-            requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
-        val id = pref.getString(Constants.User.CPF, "")
-
-        val firebase = FirebaseHandler()
-        id?.let { firebase.retrieveUserData(it) }
-
+//        checkWaiting = MockedWaitTime()
+//        peopleText = view.findViewById(R.id.waiting_users)
+//        val pref =
+//            requireActivity().getSharedPreferences(Constants.SharedPref.NAME, Context.MODE_PRIVATE)
+//        val id = pref.getString(Constants.User.CPF, "")
+//        val firebase = FirebaseHandler()
+//        id?.let { firebase.retrieveUserData(it) }
         //findDatabase() //todo pegar o banco e carregar ID aqui, depois usar o dados dele para mostrar na tela
         //todo pegar o nivel de perigo e adicionar o tempo certo
 
 
+        val currentDisease = sharedPref.getString(Constants.User.TRIAGE_DISEASE)
+        val currentColor = sharedPref.getString(Constants.User.TRIAGE_COLOR)
+        sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, true)
 
+        val textCurrentDisease = view.findViewById<TextView>(R.id.description)
+        textCurrentDisease.text = currentDisease
+        textCurrentDisease.setTextColor(getDiseaseColor(currentColor!!))
+
+        view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
+            handleBackPress()
+        }
+    }
+
+    private fun getDiseaseColor(color: String) : Int{
+        return when (color) {
+            PatientState.RED.toString() -> ContextCompat.getColor(requireContext(), R.color.red)
+            PatientState.ORANGE.toString() -> ContextCompat.getColor(requireContext(), R.color.orange)
+            PatientState.YELLOW.toString() -> ContextCompat.getColor(requireContext(), R.color.yellow)
+            PatientState.GREEN.toString() -> ContextCompat.getColor(requireContext(), R.color.green)
+            else -> ContextCompat.getColor(requireContext(), R.color.blue)
+        }
     }
 
     private fun startUpdate() {
@@ -90,6 +105,7 @@ class WaitFragment : Fragment(), FirebaseCallback {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Você deseja cancelar a espera?")
         builder.setPositiveButton("Sim") { _, _ ->
+            sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, false)
             returnToHomeScreen()
         }
         builder.setNegativeButton("Não") { _, _ -> }

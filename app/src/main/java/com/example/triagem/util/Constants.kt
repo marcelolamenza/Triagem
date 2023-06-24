@@ -13,7 +13,8 @@ object Constants {
         const val BLOOD_TYPE = "Tipo sanguineo"
         const val DISEASES = "Doenças"
 
-        const val TRIAGE_RESULT = "Triage_result"
+        const val TRIAGE_COLOR = "TRIAGE_COLOR"
+        const val TRIAGE_DISEASE = "TRIAGE_DISEASE"
 
         const val NO_USER = "-1"
     }
@@ -46,5 +47,6 @@ object Constants {
         const val FIRST_LOGIN = "firstLogin"
         const val DEFAULT_VALUE = ""
         const val LOGIN = "login"
+        const val SERVICE_ONGOING = "SERVICE_ONGOING"
     }
 }
