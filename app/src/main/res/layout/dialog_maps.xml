@@ -41,7 +41,7 @@
         tools:text="10 / 100" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/incorrect_choice_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

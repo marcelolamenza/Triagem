@@ -33,7 +33,7 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTextView = view.findViewById(R.id.title)
-        actionButton = view.findViewById(R.id.button)
+        actionButton = view.findViewById(R.id.incorrect_choice_button)
 
         val sharedPref = SharedPrefHandler(requireActivity())
         val isViewMode = sharedPref.getBoolean(Constants.Maps.IS_VIEW_MODE)

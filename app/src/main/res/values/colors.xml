@@ -2,7 +2,9 @@
 <resources>
     <color name="text_color">#72C470</color>
     <color name="colorPrimary">#72C470</color>
+    <color name="colorPrimaryAnalogous">#70c4c0</color>
     <color name="colorPrimaryDark">#4F864E</color>
+    <color name="colorPrimaryDarkAnalogous">#4e8684</color>
     <color name="colorComplementaryLight">#C270C4</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#ffffff</color>

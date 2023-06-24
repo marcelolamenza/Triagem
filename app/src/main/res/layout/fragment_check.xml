@@ -59,23 +59,45 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginVertical="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/incorrect_choice_button"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/incorrect_choice_button"
+            android:layout_width="160dp"
+            android:layout_height="72dp"
             android:layout_marginVertical="20dp"
-            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:padding="20dp"
             android:text="@string/action_button_no_option_selected"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:textSize="@dimen/letter_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_division"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/button_division"
+            android:layout_width="2dp"
+            android:layout_height="80dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/confirmation_button"
+            android:layout_width="160dp"
+            android:layout_height="72dp"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:padding="20dp"
+            android:text="@string/action_button_option_selested"
+            android:textColor="@color/white"
+            android:textSize="@dimen/letter_size_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_division" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -2,8 +2,8 @@
     <string name="app_name">Triagem</string>
     <string name="action_settings">Settings</string>
 
-    <string name="action_button_no_option_selected">Nenhuma das opções acima</string>
-    <string name="action_button_option_selested">Selecionar emergencia</string>
+    <string name="action_button_no_option_selected">Nenhuma das opções</string>
+    <string name="action_button_option_selested">Selecionar</string>
     <string name="button_end_triagem">FINALIZAR TRIAGEM</string>
     <string name="map_dialog_title_label">O hospital escolhido foi o seguinte:</string>
     <string name="map_dialog_button">confirmar</string>

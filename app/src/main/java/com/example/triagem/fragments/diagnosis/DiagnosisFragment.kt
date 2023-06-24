@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.fragment_register.recycler_view
 class DiagnosisFragment : Fragment(), DiagnosisCallback {
     private val adapter by lazy { DiagnosisItemAdapter(this) }
     private var currentState = PatientState.FIRST_SLOT
-    private lateinit var actionButton: Button
+    private lateinit var chooseNextOptionsButton: Button
+    private lateinit var confirmOptionButton: Button
 
     private var numberOfOptionsClicked = 0
     private var currentDiseaseListIndex = 0
@@ -41,10 +42,16 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
 
         fillRecycler()
 
-        actionButton = view.findViewById(R.id.button)
-        actionButton.setOnClickListener {
-            checkNextAction()
+        chooseNextOptionsButton = view.findViewById(R.id.incorrect_choice_button)
+        chooseNextOptionsButton.setOnClickListener {
+            fillRecycler()
         }
+
+        confirmOptionButton = view.findViewById(R.id.confirmation_button)
+        confirmOptionButton.setOnClickListener {
+            solveTriage()
+        }
+        enableButton(confirmOptionButton, false)
     }
 
     private fun checkNextAction() {
@@ -81,10 +88,6 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         setOptionsToCurrentState(diseases)
     }
 
-    private fun blockNextButton() {
-//        actionButton.
-    }
-
     private fun setOptionsToCurrentState(items: List<String>) {
         var maxSize = currentDiseaseListIndex + 4
 
@@ -104,14 +107,6 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         }
 
         adapter.addMultipleItems(subList)
-
-
-        // todo Testar essa otimização
-//        val maxSize = currentDiseaseListIndex + 4
-//        val subList = items.subList(currentDiseaseListIndex, maxSize.coerceAtMost(items.size))
-//        hasMoreOptions = maxSize < items.size
-//        currentDiseaseListIndex = if (hasMoreOptions) maxSize else 0
-//        adapter.addMultipleItems(subList)
     }
 
     override fun clickAction(button: Button, isSelected: Boolean, position: Int) {
@@ -139,14 +134,28 @@ class DiagnosisFragment : Fragment(), DiagnosisCallback {
         )
 
         if (numberOfOptionsClicked == 0) {
-            actionButton.text = getString(R.string.action_button_no_option_selected)
+            enableButton(chooseNextOptionsButton, true)
+            enableButton(confirmOptionButton, false)
         } else {
             numberOfOptionsClicked = 1
-            actionButton.text = getString(R.string.action_button_option_selested)
+
+            enableButton(chooseNextOptionsButton, false)
+            enableButton(confirmOptionButton, true)
+
         }
     }
 
     private fun retrieveColorResource(color: Int): ColorStateList {
         return ColorStateList.valueOf(resources.getColor(color))
+    }
+
+    private fun enableButton(button: Button, enable: Boolean) {
+        if (enable) {
+            button.alpha = 1f
+            button.isClickable = true
+        } else {
+            button.alpha = 0.5f
+            button.isClickable = false
+        }
     }
 }
