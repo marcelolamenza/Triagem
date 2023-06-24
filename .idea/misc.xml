@@ -16,13 +16,14 @@
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/toast_round_background.xml" value="0.1465" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/warning-48px.xml" value="0.123" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/warning_48px.xml" value="0.1" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/drawable/warning_bigger.xml" value="0.123" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/custom_toast_layout.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/dialog_maps.xml" value="0.15260416666666668" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_check.xml" value="0.22" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_diagnosis_continuation.xml" value="0.18177083333333333" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_disease_list.xml" value="0.33" />
-        <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_home.xml" value="0.4397463002114165" />
+        <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_login.xml" value="0.21" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_maps.xml" value="0.18645833333333334" />
         <entry key="..\:/AS Projects/Triagem/app/src/main/res/layout/fragment_register.xml" value="0.15260416666666668" />

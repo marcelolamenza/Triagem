@@ -161,6 +161,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 app:srcCompat="@drawable/ic__32_nurse" />
 
+            <TextView
+                android:id="@+id/warning_ongoing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:visibility="invisible"
+                android:drawableLeft="@drawable/warning_bigger"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

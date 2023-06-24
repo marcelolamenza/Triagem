@@ -192,7 +192,7 @@
         android:layout_margin="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorComplementaryLight"
-        android:drawableLeft="@drawable/warning_48px"
+        android:drawableLeft="@drawable/warning_small"
         android:drawablePadding="8dp"
         android:paddingVertical="16dp"
         android:text="Cancelar Atendimento"

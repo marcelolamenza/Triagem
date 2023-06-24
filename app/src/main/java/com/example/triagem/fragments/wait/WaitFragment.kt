@@ -29,7 +29,7 @@ class WaitFragment : Fragment(), FirebaseCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            handleBackPress()
+            returnToHomeScreen()
         }
     }
 

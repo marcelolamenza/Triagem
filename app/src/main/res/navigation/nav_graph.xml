@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_homeFragment_to_diseaseListFragment"
             app:destination="@id/diseaseListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_waitFragment"
+            app:destination="@id/waitFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

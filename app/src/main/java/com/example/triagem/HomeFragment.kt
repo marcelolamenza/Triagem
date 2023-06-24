@@ -22,6 +22,7 @@ import com.example.triagem.util.SharedPrefHandler
 
 class HomeFragment : Fragment(), FirebaseCallback {
 
+    private lateinit var sharedPref: SharedPrefHandler
     private lateinit var userCard: ConstraintLayout
     private lateinit var userName: TextView
     private lateinit var bloodType: TextView
@@ -37,6 +38,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref = SharedPrefHandler(requireActivity())
 
         bindViews(view)
         saveLoginPreference()
@@ -47,7 +49,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun saveLoginPreference() {
-        val sharedPref = SharedPrefHandler(requireActivity())
+        sharedPref = SharedPrefHandler(requireActivity())
         sharedPref.saveString(Constants.User.CPF, userID)
     }
 
@@ -56,6 +58,10 @@ class HomeFragment : Fragment(), FirebaseCallback {
         userCard = view.findViewById(R.id.user_description)
         bloodType = view.findViewById(R.id.blood_type)
         loadingGif = view.findViewById(R.id.loading_gif)
+
+        if(sharedPref.getBoolean(Constants.SharedPref.SERVICE_ONGOING)) {
+            view.findViewById<TextView>(R.id.warning_ongoing).visibility = View.VISIBLE
+        }
     }
 
     private fun fillUserCardInfo() {
@@ -67,7 +73,7 @@ class HomeFragment : Fragment(), FirebaseCallback {
     }
 
     private fun setClickListeners(view: View) {
-        val sharedPref = SharedPrefHandler(requireActivity())
+        sharedPref = SharedPrefHandler(requireActivity())
 
         view.findViewById<ImageButton>(R.id.edit_button)?.setOnClickListener {
             val directions =
@@ -81,7 +87,12 @@ class HomeFragment : Fragment(), FirebaseCallback {
 
         view.findViewById<CardView>(R.id.card_attendance)?.setOnClickListener {
             sharedPref.saveBoolean(Constants.Maps.IS_VIEW_MODE, false)
-            findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
+
+            if(sharedPref.getBoolean(Constants.SharedPref.SERVICE_ONGOING)) {
+                findNavController().navigate(R.id.action_homeFragment_to_waitFragment)
+            } else {
+                findNavController().navigate(R.id.action_homeFragment_to_checkFragment)
+            }
         }
 
         view.findViewById<CardView>(R.id.card_map)?.setOnClickListener {
