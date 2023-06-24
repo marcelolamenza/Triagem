@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.triagem.LoginFragmentDirections
 import com.example.triagem.R
+import com.example.triagem.models.HospitalInfo
 import com.example.triagem.models.UserInfo
 import com.example.triagem.util.*
 import kotlin.math.log
@@ -54,6 +55,12 @@ class WaitFragment : Fragment(), FirebaseCallback {
         //findDatabase() //todo pegar o banco e carregar ID aqui, depois usar o dados dele para mostrar na tela
         //todo pegar o nivel de perigo e adicionar o tempo certo
 
+        val waitingSize = view.findViewById<TextView>(R.id.waiting_users)
+        val waitingTime = view.findViewById<TextView>(R.id.waiting_time)
+        val hospitalInfo = sharedPref.getDataClass<HospitalInfo>(Constants.SharedPref.CURRENT_HOSPITAL)
+
+        waitingSize.text = hospitalInfo!!.actualPopulation.toString()
+        waitingTime.text = calculateTime()
 
         val currentDisease = sharedPref.getString(Constants.User.TRIAGE_DISEASE)
         val currentColor = sharedPref.getString(Constants.User.TRIAGE_COLOR)
@@ -66,6 +73,11 @@ class WaitFragment : Fragment(), FirebaseCallback {
         view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
             handleBackPress()
         }
+    }
+
+    private fun calculateTime(): String {
+        //todo ajustar
+        return "50 m"
     }
 
     private fun getDiseaseColor(color: String) : Int{

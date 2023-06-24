@@ -40,6 +40,8 @@ class LoginFragment : Fragment(), FirebaseCallback {
             showWelcomeDialogs()
         }
 
+        resetConfig()
+
         view.findViewById<Button>(R.id.login).setOnClickListener {
             val id = userName.text.toString()
             val filledPassword = password.text.toString()
@@ -63,6 +65,10 @@ class LoginFragment : Fragment(), FirebaseCallback {
                 LoginFragmentDirections.actionLoginFragmentToRegisterFragment(null)
             findNavController().navigate(directions)
         }
+    }
+
+    private fun resetConfig() {
+        sharedPref.saveBoolean(Constants.SharedPref.SERVICE_ONGOING, false)
     }
 
     private fun showWelcomeDialogs() {

@@ -2,7 +2,7 @@ package com.example.triagem.hospitalCommunication
 
 interface HospitalCommunicationInterface {
     fun sendInformation()
-    fun getHospitalCapacity(): Long
+    fun getHospitalInformation(): Long
     fun getPatientsList()
     fun getPatientsTotal(): Long
 }

@@ -29,8 +29,8 @@ import com.google.android.gms.maps.model.PointOfInterest
 class MapsFragment : Fragment(), GoogleMap.OnPoiClickListener, MapsDialog.DialogCallback {
     lateinit var map: GoogleMap
     lateinit var poiDialog: MapsDialog
-    private var currentPosition = LatLng(0.0,0.0)
 
+    private var currentPosition = LatLng(0.0,0.0)
     private val REQUEST_LOCATION_PERMISSION = 1
     private val TAG = MapsFragment::class.java.simpleName
 

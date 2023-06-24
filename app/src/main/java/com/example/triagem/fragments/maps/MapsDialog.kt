@@ -48,6 +48,8 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
 
         capacity = view.findViewById(R.id.capacity)
         hospitalCommunication = MockedHospitalCommunication(poi, this)
+        hospitalCommunication.getHospitalInformation()
+
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -61,6 +63,9 @@ class MapsDialog(private val poi: PointOfInterest, private val dialogCallback: D
 
     @SuppressLint("SetTextI18n")
     override fun fillHospitalInformation(hospitalInfo: HospitalInfo) {
+        val sharedPrefHandler = SharedPrefHandler(requireActivity())
+        sharedPrefHandler.saveDataClass(Constants.SharedPref.CURRENT_HOSPITAL, hospitalInfo)
+
         titleTextView.text = hospitalInfo.name
         capacity.text = "Lotação: ${hospitalInfo.actualPopulation}/ ${hospitalInfo.totalCapacity}"
     }

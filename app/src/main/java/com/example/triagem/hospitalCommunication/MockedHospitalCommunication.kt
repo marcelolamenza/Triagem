@@ -3,17 +3,25 @@ package com.example.triagem.hospitalCommunication
 import com.example.triagem.models.HospitalInfo
 import com.google.android.gms.maps.model.PointOfInterest
 
-class MockedHospitalCommunication(val poi: PointOfInterest, val hospitalCallback: MockedHospitalCallback) : HospitalCommunicationInterface {
-    init {
-        retrieveHospitalData()
-    }
+class MockedHospitalCommunication(
+    private val poi: PointOfInterest,
+    private val hospitalCallback: MockedHospitalCallback
+) : HospitalCommunicationInterface {
 
     override fun sendInformation() {
         TODO("Not yet implemented")
     }
 
-    override fun getHospitalCapacity(): Long {
-        TODO("Not yet implemented")
+    override fun getHospitalInformation(): Long {
+        val maxCapacity = generateRandomNumber(100)
+        val actualCapacity = generateRandomNumber(maxCapacity)
+
+        val hospitalInfo =
+            HospitalInfo(poi.name, poi.placeId, actualCapacity.toLong(), maxCapacity.toLong())
+
+        hospitalCallback.fillHospitalInformation(hospitalInfo)
+
+        return 0
     }
 
     override fun getPatientsList() {
@@ -24,16 +32,7 @@ class MockedHospitalCommunication(val poi: PointOfInterest, val hospitalCallback
         TODO("Not yet implemented")
     }
 
-    private fun retrieveHospitalData() {
-        val maxCapacity = generateRandomNumber(100)
-        val actualCapacity = generateRandomNumber(maxCapacity)
-
-        val hospitalInfo = HospitalInfo(poi.name, poi.placeId, actualCapacity.toLong(), maxCapacity.toLong())
-
-        hospitalCallback.fillHospitalInformation(hospitalInfo)
-    }
-
-    private fun generateRandomNumber(maxVal: Int) : Int {
+    private fun generateRandomNumber(maxVal: Int): Int {
         return (1..maxVal).random()
     }
 }
